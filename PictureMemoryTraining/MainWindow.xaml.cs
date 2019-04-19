@@ -24,5 +24,27 @@ namespace PictureMemoryTraining
         {
             InitializeComponent();
         }
+
+        #region 窗口
+
+        private void MinimizeButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            WindowState = WindowState.Minimized;
+        }
+
+        private void CloseButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+        private void HeaderGrid_OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ButtonState == MouseButtonState.Pressed)
+            {
+                this.DragMove();
+            }
+        }
+
+        #endregion
     }
 }

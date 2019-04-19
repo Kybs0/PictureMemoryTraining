@@ -4,9 +4,86 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PictureMemoryTraining"
+        xmlns:helper="clr-namespace:PictureMemoryTraining.Helper"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="记忆大师" Height="600" Width="1000" Icon="Resources/Images/Memory.ico"
+        WindowStyle="None" AllowsTransparency="True" WindowStartupLocation="CenterScreen"
+        x:Name="TheMainWindow">
+    <Window.Resources>
+        <SolidColorBrush x:Key="Color.Text.Normal">#666666</SolidColorBrush>
+        <StreamGeometry x:Key="Window.Minimize">M0,6 V8 H10 V6 Z</StreamGeometry>
+        <StreamGeometry x:Key="Window.Close">M3,8L3,9 2,9 2,10 0,10 0,8 1,8 1,7 2,7 2,6 3,6 3,4 2,4 2,3 1,3 1,2 0,2 0,0 2,0 2,1 3,1 3,2 4,2 4,3 6,3 6,2 7,2 7,1 8,1 8,0 10,0 10,2 9,2 9,3 8,3 8,4 7,4 7,6 8,6 8,7 9,7 9,8 10,8 10,10 8,10 8,9 7,9 7,8 6,8 6,7 4,7 4,8 3,8z</StreamGeometry>
+        <ControlTemplate x:Key="Button.Tempate" TargetType="Button">
+            <Grid x:Name="RootGrid" Background="Transparent">
+                <Border x:Name="CoverBorder" Width="{TemplateBinding Width}" Height="{TemplateBinding Height}"/>
+                <Path x:Name="IconPath" Fill="#808080" Margin="{TemplateBinding Padding}" VerticalAlignment="Center" HorizontalAlignment="Center"
+                      Data="{Binding Path=(helper:ControlHelper.Geometry),RelativeSource={RelativeSource TemplatedParent}}"/>
+            </Grid>
+            <ControlTemplate.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter TargetName="CoverBorder" Property="Background" 
+                            Value="{Binding Path=(helper:ControlHelper.BackgroundHover), RelativeSource={RelativeSource TemplatedParent}}"/>
+                    <Setter TargetName="IconPath" Property="Fill" 
+                            Value="{Binding Path=(helper:ControlHelper.ForegroundHover), RelativeSource={RelativeSource TemplatedParent}}"/>
+                </Trigger>
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter TargetName="CoverBorder" Property="Background" 
+                            Value="{Binding Path=(helper:ControlHelper.BackgroundPressed), RelativeSource={RelativeSource TemplatedParent}}"/>
+                    <Setter TargetName="IconPath" Property="Fill" 
+                            Value="{Binding Path=(helper:ControlHelper.ForegroundPressed), RelativeSource={RelativeSource TemplatedParent}}"/>
+                </Trigger>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter TargetName="IconPath" Property="Opacity" Value="0.4"/>
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+
+        <Style x:Key="Style.Button.Close" TargetType="Button">
+            <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Grid x:Name="RootGrid" Background="Transparent">
+                            <Ellipse x:Name="BackgroundEllipse" Width="80" Height="80" Margin="0 -40 -40 0" Fill="{StaticResource Brush.Background.Close.Light}"></Ellipse>
+                            <Path x:Name="IconPath" Fill="White" VerticalAlignment="Top" HorizontalAlignment="Right" 
+                                  Margin="0 10 10 0"  Data="{StaticResource Window.Close}"/>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="BackgroundEllipse" Property="Fill" Value="{StaticResource Brush.Background.Close.Normal}"/>
+                                <Setter TargetName="IconPath" Property="Fill" Value="White"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="BackgroundEllipse" Property="Fill" Value="{StaticResource Brush.Background.Close.Dark}"/>
+                                <Setter TargetName="IconPath" Property="Fill" Value="White"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter TargetName="IconPath" Property="Opacity" Value="0.4"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <ControlTemplate x:Key="ImageContentButtonTemplate" TargetType="Button">
+            <Image Stretch="Fill" SnapsToDevicePixels="True" UseLayoutRounding="True" Width="{TemplateBinding Width}" Height="{TemplateBinding Height}"
+                   VerticalAlignment="Center" 
+                   Source="{Binding RelativeSource={RelativeSource TemplatedParent},Path=(helper:ControlHelper.ImageSource)}"/>
+        </ControlTemplate>
+
+    </Window.Resources>
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid MouseLeftButtonDown="HeaderGrid_OnMouseLeftButtonDown"  WindowChrome.IsHitTestVisibleInChrome="True">
+            <TextBlock Text="{Binding ElementName=TheMainWindow,Path=Title}" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="20"/>
+            <!-- 关闭按钮 -->
+            <Button Name="CloseButton" Style="{StaticResource Style.Button.Close}" Click="CloseButton_OnClick" 
+                    HorizontalAlignment="Right" VerticalAlignment="Top" ToolTip="关闭"/>
+        </Grid>
+
     </Grid>
 </Window>
