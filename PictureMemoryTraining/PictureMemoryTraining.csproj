@@ -58,6 +58,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Views\MemoryPictureListControl.xaml.cs">
+      <DependentUpon>MemoryPictureListControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Models\MemoryPictureItem.cs" />
+    <Compile Include="Views\Models\MemoryPictureItemsManager.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -75,6 +80,10 @@
     <Page Include="Resources\Brushes.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\MemoryPictureListControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
@@ -104,7 +113,14 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Views\" />
+    <ProjectReference Include="..\PictureMemoryTraining.Business\PictureMemoryTraining.Business.csproj">
+      <Project>{2204F783-2F84-4296-941C-05D36D5C5A2F}</Project>
+      <Name>PictureMemoryTraining.Business</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PictureMemoryTraining.Utils\PictureMemoryTraining.Utils.csproj">
+      <Project>{7f7c3fff-a809-44c4-97fa-6d9d506d9cb6}</Project>
+      <Name>PictureMemoryTraining.Utils</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Images\Memory.ico" />
