@@ -64,14 +64,14 @@
         </Style>
     </UserControl.Resources>
     <Grid>
-        <ListBox x:Name="PictureList" Style="{StaticResource Style.ListBox}"
+        <ListBox x:Name="PictureList" Style="{StaticResource Style.ListBox}" HorizontalAlignment="Center" VerticalAlignment="Center"
                  ItemsSource="{Binding ElementName=TheMemoryPictureListControl,Path=MemoryPictureItems}">
         </ListBox>
 
-        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Right" >
-            <Button x:Name="ComfirmButton" Content="确定" FontSize="20" Margin="20" Padding="10,6" Visibility="Collapsed" IsEnabled="False" Click="ComfirmButton_OnClick"/>
-            <Button x:Name="YesButton" Content="是" FontSize="20" Margin="20" Padding="10,6" Visibility="Collapsed" Click="YesButton_OnClick"/>
-            <Button x:Name="NoButton" Content="否" FontSize="20" Margin="20" Padding="10,6" Visibility="Collapsed" Click="NoButton_OnClick"/>
+        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Right" Margin="100">
+            <Button x:Name="ComfirmButton" Content="确定" FontSize="25" Margin="0,20" Padding="10,6" Visibility="Collapsed" IsEnabled="False" Click="ComfirmButton_OnClick"/>
+            <Button x:Name="YesButton" Content="是" FontSize="25" Margin="0,20" Padding="10,6" Visibility="Collapsed" Click="YesButton_OnClick"/>
+            <Button x:Name="NoButton" Content="否" FontSize="25" Margin="0,20" Padding="10,6" Visibility="Collapsed" Click="NoButton_OnClick"/>
         </StackPanel>
     </Grid>
 </UserControl>

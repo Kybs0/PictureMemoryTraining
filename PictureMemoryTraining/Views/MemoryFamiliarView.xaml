@@ -8,8 +8,10 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
         <ContentControl x:Name="MemoryPictureListContentControl"></ContentControl>
-        <TextBlock x:Name="OperationTipTextBlock" Visibility="Visible" 
-                   Foreground="{StaticResource Brush.Text.Normal}" FontSize="20" 
-                   VerticalAlignment="Center" HorizontalAlignment="Center"/>
+        <Grid x:Name="OperationGrid" Background="White" Visibility="Collapsed">
+            <TextBlock x:Name="OperationTipTextBlock" Visibility="Visible" 
+                       Foreground="{StaticResource Brush.Text.Normal}" FontSize="25" 
+                       VerticalAlignment="Center" HorizontalAlignment="Center"/>
+        </Grid>
     </Grid>
 </UserControl>

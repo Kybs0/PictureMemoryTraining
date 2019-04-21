@@ -72,10 +72,10 @@ namespace PictureMemoryTraining.Views
 
         private void SetTestingTip()
         {
-            OperationTipTextBlock.Visibility = Visibility.Visible;
+            OperationGrid.Visibility = Visibility.Visible;
             OperationTipTextBlock.Text = "Testing";
-            this.PreviewMouseDown -= StartTesting;
-            this.PreviewMouseDown += StartTesting;
+            OperationGrid.PreviewMouseDown -= StartTesting;
+            OperationGrid.PreviewMouseDown += StartTesting;
             //置空当前图片列表控件
             MemoryPictureListContentControl.Content = null;
         }
@@ -111,8 +111,8 @@ namespace PictureMemoryTraining.Views
 
         private void CancedlTestingTip()
         {
-            OperationTipTextBlock.Visibility = Visibility.Collapsed;
-            this.PreviewMouseDown -= StartTesting;
+            OperationGrid.Visibility = Visibility.Collapsed;
+            OperationGrid.PreviewMouseDown -= StartTesting;
         }
 
         private void MemoryPictureList_OnSequentialSelected(object sender, List<MemoryPictureItem> selectedItems)

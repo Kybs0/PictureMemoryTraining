@@ -125,28 +125,29 @@ namespace PictureMemoryTraining.Views
         }
 
         public event EventHandler<LocationMemoryPictureItem> PictureLocationComfirmed;
-        private async void YesButton_OnClick(object sender, RoutedEventArgs e)
+        private void YesButton_OnClick(object sender, RoutedEventArgs e)
         {
             var memoryPictureItem = MemoryPictureItems.First(i => i.IsPictureVisibile);
+            memoryPictureItem.IsPictureVisibile = false;
             PictureLocationComfirmed?.Invoke(this, new LocationMemoryPictureItem()
             {
                 PictureItem = memoryPictureItem,
                 Location = MemoryPictureItems.IndexOf(memoryPictureItem),
                 IsMatchedByUserComfirmed = true
             });
-            memoryPictureItem.IsPictureVisibile = false;
+            
         }
 
-        private async void NoButton_OnClick(object sender, RoutedEventArgs e)
+        private void NoButton_OnClick(object sender, RoutedEventArgs e)
         {
             var memoryPictureItem = MemoryPictureItems.First(i => i.IsPictureVisibile);
+            memoryPictureItem.IsPictureVisibile = false;
             PictureLocationComfirmed?.Invoke(this, new LocationMemoryPictureItem()
             {
                 PictureItem = memoryPictureItem,
                 Location = MemoryPictureItems.IndexOf(memoryPictureItem),
                 IsMatchedByUserComfirmed = false
             });
-            memoryPictureItem.IsPictureVisibile = false;
         }
 
         #endregion

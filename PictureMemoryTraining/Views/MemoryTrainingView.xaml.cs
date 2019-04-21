@@ -62,19 +62,27 @@ namespace PictureMemoryTraining.Views
 
         #endregion
 
-        private void Test1Button_OnClick(object sender, RoutedEventArgs e)
+        #region 测试阶段
+
+        private void TestButton_OnClick(object sender, RoutedEventArgs e)
         {
-            throw new NotImplementedException();
+            var items = MemoryPictureItemsManager.GetMemoryPictures();
+            var memoryTestView = new MemoryTestView(items);
+            memoryTestView.Tag = sender;
+            memoryTestView.TestingCompleted += MemoryTestView_TestingCompleted;
+            TraingViewCotnentControl.Content = memoryTestView;
         }
 
-        private void Test2Button_OnClick(object sender, RoutedEventArgs e)
+        private void MemoryTestView_TestingCompleted(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            if (sender is MemoryTestView memoryTestView && memoryTestView.Tag is Button button)
+            {
+                TraingViewCotnentControl.Content = null;
+                button.IsEnabled = false;
+            }
         }
 
-        private void Test3Button_OnClick(object sender, RoutedEventArgs e)
-        {
-            throw new NotImplementedException();
-        }
+        #endregion
+
     }
 }
