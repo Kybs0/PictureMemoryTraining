@@ -66,29 +66,17 @@ namespace PictureMemoryTraining.Views.Models
                 OnPropertyChanged();
             }
         }
-
-        private bool _isSettingMemoryPictureVisibileStatus = false;
-
-        public async void SetMemoryPictureVisibileStatus()
+        private bool _isPictureEnabled = true;
+        /// <summary>
+        /// 图片元素是否可操作
+        /// </summary>
+        public bool IsPictureEnabled
         {
-            if (!_isSettingMemoryPictureVisibileStatus)
+            get => _isPictureEnabled;
+            set
             {
-                _isSettingMemoryPictureVisibileStatus = true;
-
-                if (IsHighlighted)
-                {
-                    IsPictureVisibile = false;
-                    await Task.Delay(TimeSpan.FromMilliseconds(500));
-                    IsHighlighted = false;
-                }
-                else
-                {
-                    IsHighlighted = true;
-                    await Task.Delay(TimeSpan.FromMilliseconds(500));
-                    IsPictureVisibile = true;
-                }
-
-                _isSettingMemoryPictureVisibileStatus = false;
+                _isPictureEnabled = value;
+                OnPropertyChanged();
             }
         }
 

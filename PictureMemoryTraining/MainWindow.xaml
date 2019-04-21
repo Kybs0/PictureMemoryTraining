@@ -85,6 +85,6 @@
             <Button Name="CloseButton" Style="{StaticResource Style.Button.Close}" Click="CloseButton_OnClick" 
                     HorizontalAlignment="Right" VerticalAlignment="Top" ToolTip="关闭"/>
         </Grid>
-        <views:MemoryPictureListControl Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center"></views:MemoryPictureListControl>
+        <views:MemoryTrainingView Grid.Row="1"></views:MemoryTrainingView>
     </Grid>
 </Window>

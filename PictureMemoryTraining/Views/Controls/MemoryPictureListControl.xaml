@@ -20,7 +20,8 @@
             <Setter Property="ItemContainerStyle">
                 <Setter.Value>
                     <Style TargetType="ListBoxItem">
-                        <EventSetter Event="PreviewMouseDown" Handler="ListBoxItem_OnPreviewMouseDownHandler"></EventSetter>
+                        <EventSetter Event="PreviewMouseDown" Handler="ListBoxItem_OnPreviewMouseDownHandler"/>
+                        <Setter Property="IsEnabled" Value="{Binding IsPictureEnabled}"/>
                         <Setter Property="Template">
                             <Setter.Value>
                                 <ControlTemplate TargetType="ListBoxItem">
@@ -66,5 +67,11 @@
         <ListBox x:Name="PictureList" Style="{StaticResource Style.ListBox}"
                  ItemsSource="{Binding ElementName=TheMemoryPictureListControl,Path=MemoryPictureItems}">
         </ListBox>
+
+        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Right" >
+            <Button x:Name="ComfirmButton" Content="确定" FontSize="20" Margin="20" Padding="10,6" Visibility="Collapsed" IsEnabled="False" Click="ComfirmButton_OnClick"/>
+            <Button x:Name="YesButton" Content="是" FontSize="20" Margin="20" Padding="10,6" Visibility="Collapsed" Click="YesButton_OnClick"/>
+            <Button x:Name="NoButton" Content="否" FontSize="20" Margin="20" Padding="10,6" Visibility="Collapsed" Click="NoButton_OnClick"/>
+        </StackPanel>
     </Grid>
 </UserControl>
