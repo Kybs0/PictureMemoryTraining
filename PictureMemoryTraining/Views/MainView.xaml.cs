@@ -44,5 +44,11 @@ namespace PictureMemoryTraining.Views
             userInfoMode.StartRecord();
             UserStartingGrid.Visibility = Visibility.Collapsed;
         }
+
+        private void MemoryTrainingView_OnTestingCompleted(object sender, EventArgs e)
+        {
+            UserStartingGrid.Visibility = Visibility.Visible;
+            StartTrainingButton.Visibility = Visibility.Visible;
+        }
     }
 }

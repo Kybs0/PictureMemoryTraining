@@ -20,13 +20,18 @@
             <StackPanel Orientation="Horizontal" x:Name="UserStatusPanel" Margin="0 -60 0 0" VerticalAlignment="Top" HorizontalAlignment="Center" >
                 <TextBlock Text="{Binding ElementName=TheMainView,Path=UserInfo.TestCode,StringFormat={} {0} -}"/>
                 <TextBlock Text="{Binding ElementName=TheMainView,Path=UserInfo.UserName,StringFormat={} {0} -}"/>
-                <TextBlock Text="{Binding ElementName=TheMainView,Path=UserInfo.ConsumingSeconds,StringFormat={} {0} s}"/>
+                <TextBlock Text="{Binding ElementName=TheMainView,Path=UserInfo.ConsumingSeconds,StringFormat={} {0} s}" 
+                           Foreground="{StaticResource Brush.Text.Warning.Normal}"/>
             </StackPanel>
-            <local:MemoryTrainingView/>
+            <local:MemoryTrainingView TestingCompleted="MemoryTrainingView_OnTestingCompleted"/>
         </Grid>
         <Grid x:Name="UserStartingGrid">
-            <Button x:Name="StartTrainingButton" Content="点击开始" Click="StartButton_OnClick" Padding="20,10" 
-                    VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="36" Background="Transparent"/>
+            <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0 -60 0 0">
+                <TextBlock Text="{Binding ElementName=TheMainView,Path=UserInfo.UserName,StringFormat={}{0}测试已结束}" 
+                           Foreground="{StaticResource Brush.Accent.Normal}" FontSize="25" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                <Button x:Name="StartTrainingButton" Content="点击开始" Click="StartButton_OnClick" Padding="20,10" 
+            VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="36" Background="Transparent" Margin="0 30 0 0"/>
+            </StackPanel>
             <local:EditUserProfileView UserInfoInputed="EditUserProfileView_OnUserInfoInputed"
                 Visibility="{Binding ElementName=StartTrainingButton,Path=Visibility,Converter={StaticResource VisibilityReverseConverter}}"/>
         </Grid>

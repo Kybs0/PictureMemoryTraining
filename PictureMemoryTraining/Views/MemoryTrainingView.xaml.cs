@@ -84,13 +84,18 @@ namespace PictureMemoryTraining.Views
             memoryTestView.TestingCompleted += MemoryTestView_TestingCompleted;
             TraingViewCotnentControl.Content = memoryTestView;
         }
-
+        public event EventHandler TestingCompleted;
         private void MemoryTestView_TestingCompleted(object sender, EventArgs e)
         {
             if (sender is MemoryTestView memoryTestView && memoryTestView.Tag is Button button)
             {
                 TraingViewCotnentControl.Content = null;
                 button.IsEnabled = false;
+            }
+
+            if (Test1Button.IsEnabled == false && Test2Button.IsEnabled == false &&Test3Button.IsEnabled == false)
+            {
+                TestingCompleted?.Invoke(this,EventArgs.Empty);
             }
         }
 
