@@ -15,6 +15,7 @@
         </Style>
     </UserControl.Resources>
     <Grid>
+        <!--记忆训练-->
         <Grid x:Name="TrainingViewGrid"
               Visibility="{Binding ElementName=UserStartingGrid,Path=Visibility,Converter={StaticResource VisibilityReverseConverter}}">
             <StackPanel Orientation="Horizontal" x:Name="UserStatusPanel" Margin="0 -60 0 0" VerticalAlignment="Top" HorizontalAlignment="Center" >
@@ -25,9 +26,10 @@
             </StackPanel>
             <local:MemoryTrainingView TestingCompleted="MemoryTrainingView_OnTestingCompleted"/>
         </Grid>
+        <!--用户开始界面-->
         <Grid x:Name="UserStartingGrid">
             <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0 -60 0 0">
-                <TextBlock Text="{Binding ElementName=TheMainView,Path=UserInfo.UserName,StringFormat={}{0}测试已结束}" 
+                <TextBlock Text="{Binding ElementName=TheMainView,Path=UserInfo.UserName,StringFormat={}{0}测试已结束}" Visibility="Collapsed"
                            Foreground="{StaticResource Brush.Accent.Normal}" FontSize="25" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                 <Button x:Name="StartTrainingButton" Content="点击开始" Click="StartButton_OnClick" Padding="20,10" 
             VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="36" Background="Transparent" Margin="0 30 0 0"/>

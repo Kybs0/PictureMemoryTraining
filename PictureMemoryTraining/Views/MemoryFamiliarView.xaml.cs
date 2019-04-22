@@ -95,10 +95,9 @@ namespace PictureMemoryTraining.Views
 
         private void StartSequentialMemoryTest()
         {
-            var memoryPictureItems = _memoryPictureItems;
+            var memoryPictureItems = _memoryPictureItems.ToList();
             //打乱随机排序
             var pictureItems = memoryPictureItems.RandomSort();
-            _memoryPictureItems = pictureItems;
 
             //初始化图片
             foreach (var memoryPictureItem in pictureItems)
@@ -146,7 +145,7 @@ namespace PictureMemoryTraining.Views
 
         private void StartLocationMemoryTesting()
         {
-            var memoryPictureItems = _memoryPictureItems;
+            var memoryPictureItems = _memoryPictureItems.ToList();
             //打乱随机排序
             var pictureItems = memoryPictureItems.RandomSort();
             //保持一个图片原位置
@@ -156,7 +155,9 @@ namespace PictureMemoryTraining.Views
             var memoryPictureItem = memorizedPictureList[randomIndex].PictureItem;
             pictureItems.Remove(memoryPictureItem);
             pictureItems.Insert(memorizedPictureList[randomIndex].Location, memoryPictureItem);
-            _memoryPictureItems = pictureItems;
+
+            //设置初始状态
+            pictureItems.ForEach(i => i.IsPictureCovered = true);
 
             //初始化图片
             var visibileRandomIndex = random.Next(memorizedPictureList.Count);

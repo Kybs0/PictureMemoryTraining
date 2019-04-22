@@ -129,7 +129,8 @@ namespace PictureMemoryTraining.Views
         {
             var memoryPictureItem = MemoryPictureItems.First(i => i.IsPictureVisibile);
             memoryPictureItem.IsPictureVisibile = false;
-            PictureLocationComfirmed?.Invoke(this, new LocationMemoryPictureItem()
+            memoryPictureItem.IsPictureCovered = true;
+             PictureLocationComfirmed?.Invoke(this, new LocationMemoryPictureItem()
             {
                 PictureItem = memoryPictureItem,
                 Location = MemoryPictureItems.IndexOf(memoryPictureItem),
@@ -142,6 +143,7 @@ namespace PictureMemoryTraining.Views
         {
             var memoryPictureItem = MemoryPictureItems.First(i => i.IsPictureVisibile);
             memoryPictureItem.IsPictureVisibile = false;
+            memoryPictureItem.IsPictureCovered = true;
             PictureLocationComfirmed?.Invoke(this, new LocationMemoryPictureItem()
             {
                 PictureItem = memoryPictureItem,

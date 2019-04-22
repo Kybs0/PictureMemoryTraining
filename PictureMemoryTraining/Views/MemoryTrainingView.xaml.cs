@@ -44,6 +44,7 @@ namespace PictureMemoryTraining.Views
             memoryFamiliarView.TestingCompleted += MemoryFamiliarView_TestingCompleted;
 
             TraingViewCotnentControl.Content = memoryFamiliarView;
+            QuitButton.Visibility = Visibility.Visible;
 
             var items = MemoryPictureItemsManager.GetMemoryPictures();
             memoryFamiliarView.InitMemoryPictures(items);
@@ -83,6 +84,7 @@ namespace PictureMemoryTraining.Views
             memoryTestView.Tag = sender;
             memoryTestView.TestingCompleted += MemoryTestView_TestingCompleted;
             TraingViewCotnentControl.Content = memoryTestView;
+            QuitButton.Visibility = Visibility.Visible;
         }
         public event EventHandler TestingCompleted;
         private void MemoryTestView_TestingCompleted(object sender, EventArgs e)
@@ -101,5 +103,10 @@ namespace PictureMemoryTraining.Views
 
         #endregion
 
+        private void QuitButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            TraingViewCotnentControl.Content = null;
+            QuitButton.Visibility = Visibility.Collapsed;
+        }
     }
 }

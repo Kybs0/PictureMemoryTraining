@@ -41,12 +41,12 @@ namespace PictureMemoryTraining.Views
 
         private async Task StartLearning(bool isFirstLearning = false)
         {
-            CurrentStateTextBlock.Text = isFirstLearning?"开始记忆": "继续记忆";
+            CurrentStateTextBlock.Text = isFirstLearning ? "开始记忆" : "继续记忆";
             CurrentStateDetailTextBlock.Text = "依次点击图片，记忆此图片位置及点击的顺序";
             var clickMaxLimit = GetClickMaxLimit();
             ResetMemoryPictureListStatus();
 
-            var memoryPictureItems = _memoryPictureItems;
+            var memoryPictureItems = _memoryPictureItems.ToList();
             if (isFirstLearning)
             {
                 //首次显示所有图片
@@ -141,10 +141,9 @@ namespace PictureMemoryTraining.Views
 
         private void StartSequentialMemoryTest()
         {
-            var memoryPictureItems = _memoryPictureItems;
+            var memoryPictureItems = _memoryPictureItems.ToList();
             //打乱随机排序
             var pictureItems = memoryPictureItems.RandomSort();
-            _memoryPictureItems = pictureItems;
 
             //初始化图片
             foreach (var memoryPictureItem in pictureItems)
@@ -183,6 +182,7 @@ namespace PictureMemoryTraining.Views
             {
                 memoryPictureItem.IsHighlighted = false;
                 memoryPictureItem.IsPictureVisibile = false;
+                memoryPictureItem.IsPictureCovered = false;
             }
         }
 
@@ -192,7 +192,7 @@ namespace PictureMemoryTraining.Views
 
         private void StartLocationMemoryTesting()
         {
-            var memoryPictureItems = _memoryPictureItems;
+            var memoryPictureItems = _memoryPictureItems.ToList();
             //打乱随机排序
             var pictureItems = memoryPictureItems.RandomSort();
             //保持一个图片原位置
@@ -202,7 +202,9 @@ namespace PictureMemoryTraining.Views
             var memoryPictureItem = memorizedPictureList[randomIndex].PictureItem;
             pictureItems.Remove(memoryPictureItem);
             pictureItems.Insert(memorizedPictureList[randomIndex].Location, memoryPictureItem);
-            _memoryPictureItems = pictureItems;
+
+            //设置初始状态
+            pictureItems.ForEach(i => i.IsPictureCovered = true);
 
             //初始化图片
             var visibileRandomIndex = random.Next(memorizedPictureList.Count);
@@ -273,5 +275,6 @@ namespace PictureMemoryTraining.Views
         }
 
         #endregion
+
     }
 }

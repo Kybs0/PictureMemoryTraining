@@ -74,16 +74,14 @@
         </ControlTemplate>
 
     </Window.Resources>
-    <Grid Margin="10">
+    <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="60"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
         <!-- 关闭按钮 -->
         <Button x:Name="CloseButton" Style="{StaticResource Style.Button.Close}" Click="CloseButton_OnClick" 
-                HorizontalAlignment="Right" VerticalAlignment="Top" ToolTip="关闭" Height="40" Width="40"/>
-        <TextBlock Grid.Row="0" Text="{Binding ElementName=TheMainWindow,Path=Title}" Foreground="{StaticResource Brush.Text.Dark}" 
-                   HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="30" Visibility="Collapsed"/>
+                HorizontalAlignment="Right" VerticalAlignment="Top" ToolTip="关闭" />
         <views:MainView Grid.Row="1"></views:MainView>
     </Grid>
 </Window>

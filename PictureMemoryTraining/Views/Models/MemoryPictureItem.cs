@@ -63,6 +63,11 @@ namespace PictureMemoryTraining.Views.Models
             set
             {
                 _isPictureVisibile = value;
+                if (value)
+                {
+                    //图片显示时，覆盖状态取消
+                    IsPictureCovered = false;
+                }
                 OnPropertyChanged();
             }
         }
@@ -76,6 +81,20 @@ namespace PictureMemoryTraining.Views.Models
             set
             {
                 _isPictureEnabled = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _isPictureCovered = true;
+        /// <summary>
+        /// 图片元素是否可显示被覆盖
+        /// </summary>
+        public bool IsPictureCovered
+        {
+            get => _isPictureCovered;
+            set
+            {
+                _isPictureCovered = value;
                 OnPropertyChanged();
             }
         }

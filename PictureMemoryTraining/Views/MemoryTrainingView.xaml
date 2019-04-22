@@ -18,7 +18,7 @@
         <converters:NullToVisibilityConverter x:Key="NullToVisibilityReverseConverter" IsReverse="True"/>
     </UserControl.Resources>
     <Grid>
-        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" 
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0 0 -60 0"
                     Visibility="{Binding ElementName=TraingViewCotnentControl,Path=Content,Converter={StaticResource NullToVisibilityReverseConverter}}">
             <GroupBox Header="Familiarization (can skip)" FontSize="25">
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
@@ -34,6 +34,11 @@
                 </StackPanel>
             </GroupBox>
         </StackPanel>
-        <ContentControl x:Name="TraingViewCotnentControl"/>
+        <Grid>
+            <ContentControl x:Name="TraingViewCotnentControl"/>
+            <Button x:Name="QuitButton" Content="Quit" Foreground="{StaticResource Brush.Text.Warning.Normal}" 
+                    HorizontalAlignment="Right" VerticalAlignment="Bottom" Visibility="Collapsed"
+                    FontSize="25" Margin="20" Padding="10,6" Click="QuitButton_OnClick" BorderThickness="0"/>
+        </Grid>
     </Grid>
 </UserControl>

@@ -36,6 +36,9 @@
                                         <!--<Trigger Property="IsMouseOver" Value="True">
                                             <Setter TargetName="RootBorder" Property="BorderBrush" Value="#FFA09C9C"/>
                                         </Trigger>-->
+                                        <DataTrigger Binding="{Binding IsPictureCovered}" Value="True">
+                                            <Setter TargetName="RootBorder" Property="Background" Value="#D0CECE"/>
+                                        </DataTrigger>
                                         <DataTrigger Binding="{Binding IsHighlighted}" Value="True">
                                             <Setter TargetName="RootBorder" Property="BorderBrush" Value="#FF0000"/>
                                         </DataTrigger>
