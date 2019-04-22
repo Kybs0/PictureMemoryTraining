@@ -1,13 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using PictureMemoryTraining.Business;
 using Timer = System.Timers.Timer;
 
-namespace PictureMemoryTraining.Views.Models
+namespace PictureMemoryTraining.Business.Excel
 {
     public class UserInfoMode : NotifyPropertyChanged
     {
@@ -27,10 +21,8 @@ namespace PictureMemoryTraining.Views.Models
             }
         }
 
-        private DateTime _recordTime = DateTime.MinValue;
         public void StartRecord()
         {
-            _recordTime = DateTime.Now;
             var timer = new Timer();
             timer.Interval = TimeSpan.FromSeconds(1).TotalMilliseconds;
             timer.Elapsed += Timer_Elapsed;

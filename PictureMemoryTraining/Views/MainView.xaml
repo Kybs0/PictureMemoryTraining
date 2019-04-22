@@ -24,7 +24,7 @@
                 <TextBlock Text="{Binding ElementName=TheMainView,Path=UserInfo.ConsumingSeconds,StringFormat={} {0} s}" 
                            Foreground="{StaticResource Brush.Text.Warning.Normal}"/>
             </StackPanel>
-            <local:MemoryTrainingView TestingCompleted="MemoryTrainingView_OnTestingCompleted"/>
+            <local:MemoryTrainingView x:Name="MemoryTrainingView" TestingCompleted="MemoryTrainingView_OnTestingCompleted"/>
         </Grid>
         <!--用户开始界面-->
         <Grid x:Name="UserStartingGrid">

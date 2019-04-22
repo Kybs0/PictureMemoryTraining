@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,8 +12,9 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
-using System.Windows.Shapes;
+using PictureMemoryTraining.Business.Excel;
 using PictureMemoryTraining.Views.Models;
+using Path = System.Windows.Shapes.Path;
 
 namespace PictureMemoryTraining.Views
 {
@@ -28,6 +30,7 @@ namespace PictureMemoryTraining.Views
         private void StartButton_OnClick(object sender, RoutedEventArgs e)
         {
             StartTrainingButton.Visibility = Visibility.Collapsed;
+
         }
 
         public static readonly DependencyProperty UserInfoProperty = DependencyProperty.Register(
@@ -42,13 +45,20 @@ namespace PictureMemoryTraining.Views
         {
             UserInfo = userInfoMode;
             userInfoMode.StartRecord();
+            _userDetailTestRecord.UserInfo = userInfoMode;
+            MemoryTrainingView.UserDetailTestRecord = _userDetailTestRecord;
             UserStartingGrid.Visibility = Visibility.Collapsed;
+            MemoryPicturesExcelHelper.SaveMemoryTestData(_userDetailTestRecord);
         }
-
+        private UserDetailTestRecordInfo _userDetailTestRecord = new UserDetailTestRecordInfo();
         private void MemoryTrainingView_OnTestingCompleted(object sender, EventArgs e)
         {
             UserStartingGrid.Visibility = Visibility.Visible;
             StartTrainingButton.Visibility = Visibility.Visible;
+
+            MemoryPicturesExcelHelper.SaveMemoryTestData(_userDetailTestRecord);
         }
+
+
     }
 }

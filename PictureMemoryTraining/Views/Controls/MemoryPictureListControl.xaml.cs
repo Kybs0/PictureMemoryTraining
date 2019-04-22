@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,8 +13,10 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using PictureMemoryTraining.Business.Excel;
 using PictureMemoryTraining.Business.MemoryPicturesData;
 using PictureMemoryTraining.Views.Models;
+using Path = System.IO.Path;
 
 namespace PictureMemoryTraining.Views
 {
@@ -22,9 +25,11 @@ namespace PictureMemoryTraining.Views
     /// </summary>
     public partial class MemoryPictureListControl : UserControl
     {
-        public MemoryPictureListControl(TrainingStageSetting trainingStageSetting)
+        private UserTestRecordInfo _testRecordInfo = null;
+        public MemoryPictureListControl(TrainingStageSetting trainingStageSetting, UserTestRecordInfo testRecordInfo)
         {
             InitializeComponent();
+            _testRecordInfo = testRecordInfo;
             SetTrainingStageSetting(trainingStageSetting);
         }
 
@@ -130,13 +135,13 @@ namespace PictureMemoryTraining.Views
             var memoryPictureItem = MemoryPictureItems.First(i => i.IsPictureVisibile);
             memoryPictureItem.IsPictureVisibile = false;
             memoryPictureItem.IsPictureCovered = true;
-             PictureLocationComfirmed?.Invoke(this, new LocationMemoryPictureItem()
+            PictureLocationComfirmed?.Invoke(this, new LocationMemoryPictureItem()
             {
                 PictureItem = memoryPictureItem,
                 Location = MemoryPictureItems.IndexOf(memoryPictureItem),
                 IsMatchedByUserComfirmed = true
             });
-            
+
         }
 
         private void NoButton_OnClick(object sender, RoutedEventArgs e)
@@ -181,6 +186,11 @@ namespace PictureMemoryTraining.Views
                 if (_selectedSequentialPictureList.All(i => i != memoryPictureItem))
                 {
                     _selectedSequentialPictureList.Add(memoryPictureItem);
+                    _testRecordInfo.SequentialTestingClickInfos.Add(new TestingClickInfo()
+                    {
+                        ClickTime = DateTime.Now,
+                        PictureName = Path.GetFileNameWithoutExtension(memoryPictureItem.ImageUri)
+                    });
                 }
             }
             else
@@ -188,6 +198,8 @@ namespace PictureMemoryTraining.Views
                 if (_selectedSequentialPictureList.Any(i => i == memoryPictureItem))
                 {
                     _selectedSequentialPictureList.Remove(memoryPictureItem);
+                    var testingClickInfo = _testRecordInfo.SequentialTestingClickInfos.First(i=>i.PictureName==Path.GetFileNameWithoutExtension(memoryPictureItem.ImageUri));
+                    _testRecordInfo.SequentialTestingClickInfos.Remove(testingClickInfo);
                 }
             }
 
@@ -231,11 +243,17 @@ namespace PictureMemoryTraining.Views
 
             var isPreviousPictureVisibile = memoryPictureItem.IsPictureVisibile;
             await SetMemoryPictureMarkedStatus(memoryPictureItem);
-
-
+            //第一次翻开
+            if (!isPreviousPictureVisibile && memoryPictureItem.IsPictureVisibile)
+            {
+                _testRecordInfo.LearningClickInfos.Add(new LearningClickInfo()
+                {
+                    ClickTime = DateTime.Now,
+                    PictureName = Path.GetFileNameWithoutExtension(memoryPictureItem.ImageUri)
+                });
+            }
             //如果由显示改为关闭，则说明已经记忆过此图片
-            var isMemorized = isPreviousPictureVisibile && !memoryPictureItem.IsPictureVisibile;
-            if (isMemorized)
+            if (isPreviousPictureVisibile && !memoryPictureItem.IsPictureVisibile)
             {
                 //添加到已记忆列表
                 _memorizedPictureList.Add(new MemorizedMemoryPictureItem()

@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using PictureMemoryTraining.Business.Excel;
 using PictureMemoryTraining.Utils;
 using PictureMemoryTraining.Views.Models;
 
@@ -48,7 +49,7 @@ namespace PictureMemoryTraining.Views
             {
                 ClickMaxLimit = 2,
                 TrainingStage = TrainingStage.Learning
-            });
+            }, new UserTestRecordInfo());
             memoryPictureListControl.MemoryPictureItems = items;
             memoryPictureListControl.PictureMemorized += MemoryPictureList_OnPictureMemorized;
             MemoryPictureListContentControl.Content = memoryPictureListControl;
@@ -108,7 +109,7 @@ namespace PictureMemoryTraining.Views
             {
                 ClickMaxLimit = 2,
                 TrainingStage = TrainingStage.SequentialTesting
-            });
+            }, new UserTestRecordInfo());
             memoryPictureListControl.MemoryPictureItems = pictureItems;
             memoryPictureListControl.SequentialSelected += MemoryPictureList_OnSequentialSelected;
             MemoryPictureListContentControl.Content = memoryPictureListControl;
@@ -169,7 +170,7 @@ namespace PictureMemoryTraining.Views
             {
                 ClickMaxLimit = 2,
                 TrainingStage = TrainingStage.LocationTesting
-            });
+            }, new UserTestRecordInfo());
             memoryPictureListControl.MemoryPictureItems = pictureItems;
             memoryPictureListControl.PictureLocationComfirmed += MemoryPictureList_OnPictureLocationComfirmed;
             MemoryPictureListContentControl.Content = memoryPictureListControl;
@@ -195,16 +196,16 @@ namespace PictureMemoryTraining.Views
                 var memorizedPictureList = _memorizedPictureList;
                 var random = new Random();
                 MemoryPictureItem visibileRandomPictureItem = null;
-                while (visibileRandomPictureItem==null)
+                while (visibileRandomPictureItem == null)
                 {
                     var visibileRandomIndex = random.Next(memorizedPictureList.Count);
                     var randomPictureItem = memorizedPictureList[visibileRandomIndex].PictureItem;
-                    if (_selectedLocationTestingPictureList.All(i=>i.PictureItem!=randomPictureItem))
+                    if (_selectedLocationTestingPictureList.All(i => i.PictureItem != randomPictureItem))
                     {
                         visibileRandomPictureItem = randomPictureItem;
                     }
                 }
-                
+
                 visibileRandomPictureItem.IsPictureVisibile = true;
             }
         }

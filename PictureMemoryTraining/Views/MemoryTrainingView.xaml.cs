@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using PictureMemoryTraining.Business.Excel;
 using PictureMemoryTraining.Views.Models;
 
 namespace PictureMemoryTraining.Views
@@ -34,6 +35,8 @@ namespace PictureMemoryTraining.Views
             get { return (string)GetValue(CurrentProperty); }
             set { SetValue(CurrentProperty, value); }
         }
+
+        public UserDetailTestRecordInfo UserDetailTestRecord { get; set; }
 
         #region 熟悉阶段
 
@@ -66,27 +69,28 @@ namespace PictureMemoryTraining.Views
         {
             //在程序运行期间，使用同一组图片
             var items = MemoryPictureItemsManager.GetTest1MemoryPictures();
-            EnterTestingView(sender, items);
+            EnterTestingView(sender, items, UserDetailTestRecord.Group1TestInfo);
         }
         private void Test2Button_OnClick(object sender, RoutedEventArgs e)
         {
             var items = MemoryPictureItemsManager.GetTest2MemoryPictures();
-            EnterTestingView(sender, items);
+            EnterTestingView(sender, items, UserDetailTestRecord.Group2TestInfo);
         }
         private void Test3Button_OnClick(object sender, RoutedEventArgs e)
         {
             var items = MemoryPictureItemsManager.GetTest3MemoryPictures();
-            EnterTestingView(sender, items);
+            EnterTestingView(sender, items, UserDetailTestRecord.Group3TestInfo);
         }
-        private void EnterTestingView(object sender, List<MemoryPictureItem> items)
+        private void EnterTestingView(object sender, List<MemoryPictureItem> items, GroupTestInfo groupTestInfo)
         {
-            var memoryTestView = new MemoryTestView(items);
+            var memoryTestView = new MemoryTestView(items, groupTestInfo);
             memoryTestView.Tag = sender;
             memoryTestView.TestingCompleted += MemoryTestView_TestingCompleted;
             TraingViewCotnentControl.Content = memoryTestView;
             QuitButton.Visibility = Visibility.Visible;
         }
         public event EventHandler TestingCompleted;
+        private UserDetailTestRecordInfo _userDetailTestRecord = new UserDetailTestRecordInfo();
         private void MemoryTestView_TestingCompleted(object sender, EventArgs e)
         {
             if (sender is MemoryTestView memoryTestView && memoryTestView.Tag is Button button)
@@ -95,9 +99,9 @@ namespace PictureMemoryTraining.Views
                 button.IsEnabled = false;
             }
 
-            if (Test1Button.IsEnabled == false && Test2Button.IsEnabled == false &&Test3Button.IsEnabled == false)
+            if (Test1Button.IsEnabled == false && Test2Button.IsEnabled == false && Test3Button.IsEnabled == false)
             {
-                TestingCompleted?.Invoke(this,EventArgs.Empty);
+                TestingCompleted?.Invoke(this, EventArgs.Empty);
             }
         }
 
@@ -105,6 +109,18 @@ namespace PictureMemoryTraining.Views
 
         private void QuitButton_OnClick(object sender, RoutedEventArgs e)
         {
+            if (Test1Button.IsEnabled)
+            {
+                _userDetailTestRecord.Group1TestInfo = new GroupTestInfo();
+            }
+            if (Test2Button.IsEnabled)
+            {
+                _userDetailTestRecord.Group2TestInfo = new GroupTestInfo();
+            }
+            if (Test3Button.IsEnabled)
+            {
+                _userDetailTestRecord.Group3TestInfo = new GroupTestInfo();
+            }
             TraingViewCotnentControl.Content = null;
             QuitButton.Visibility = Visibility.Collapsed;
         }

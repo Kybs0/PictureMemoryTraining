@@ -12,8 +12,10 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using PictureMemoryTraining.Business.Excel;
 using PictureMemoryTraining.Utils;
 using PictureMemoryTraining.Views.Models;
+using Path = System.IO.Path;
 
 namespace PictureMemoryTraining.Views
 {
@@ -22,15 +24,18 @@ namespace PictureMemoryTraining.Views
     /// </summary>
     public partial class MemoryTestView : UserControl
     {
-        public MemoryTestView(List<MemoryPictureItem> items)
+        public MemoryTestView(List<MemoryPictureItem> items, GroupTestInfo groupTestInfo)
         {
             InitializeComponent();
             _memoryPictureItems = items;
+            _groupTestInfo = groupTestInfo;
             Loaded += async (s, e) =>
             {
                 await StartLearning(true);
             };
         }
+
+        private GroupTestInfo _groupTestInfo;
 
         private List<MemoryPictureItem> _memoryPictureItems = null;
 
@@ -38,12 +43,13 @@ namespace PictureMemoryTraining.Views
 
         private List<int> _memoryCountOrderList = new List<int>() { 4, 5, 6 };
         private List<int> _usedmemoryCountOrderList = new List<int>();
-
+        private UserTestRecordInfo _currentTestRecordInfo = null;
         private async Task StartLearning(bool isFirstLearning = false)
         {
             CurrentStateTextBlock.Text = isFirstLearning ? "开始记忆" : "继续记忆";
             CurrentStateDetailTextBlock.Text = "依次点击图片，记忆此图片位置及点击的顺序";
             var clickMaxLimit = GetClickMaxLimit();
+            _currentTestRecordInfo = GetTestInfoByClickCount(clickMaxLimit);
             ResetMemoryPictureListStatus();
 
             var memoryPictureItems = _memoryPictureItems.ToList();
@@ -61,7 +67,7 @@ namespace PictureMemoryTraining.Views
             {
                 ClickMaxLimit = clickMaxLimit,
                 TrainingStage = TrainingStage.Learning
-            });
+            }, _currentTestRecordInfo);
             memoryPictureListControl.MemoryPictureItems = memoryPictureItems;
             memoryPictureListControl.PictureMemorized += MemoryPictureList_OnPictureMemorized;
             MemoryPictureListContentControl.Content = memoryPictureListControl;
@@ -75,6 +81,24 @@ namespace PictureMemoryTraining.Views
                     memoryPictureItem.IsPictureEnabled = true;
                     memoryPictureItem.IsPictureVisibile = false;
                 }
+            }
+            //记录时间
+            _currentTestRecordInfo.StartLearningTime = DateTime.Now;
+        }
+
+        private UserTestRecordInfo GetTestInfoByClickCount(int clickMaxLimit)
+        {
+            if (clickMaxLimit == 4)
+            {
+                return _groupTestInfo.FourPicturesUserTestRecordInfo;
+            }
+            else if (clickMaxLimit == 5)
+            {
+                return _groupTestInfo.FivePicturesUserTestRecordInfo;
+            }
+            else
+            {
+                return _groupTestInfo.SixPicturesUserTestRecordInfo;
             }
         }
 
@@ -154,10 +178,12 @@ namespace PictureMemoryTraining.Views
             {
                 ClickMaxLimit = 3,
                 TrainingStage = TrainingStage.SequentialTesting
-            });
+            }, _currentTestRecordInfo);
             memoryPictureListControl.MemoryPictureItems = pictureItems;
             memoryPictureListControl.SequentialSelected += MemoryPictureList_OnSequentialSelected;
             MemoryPictureListContentControl.Content = memoryPictureListControl;
+            //记录开始测试时间
+            _currentTestRecordInfo.StartTestingTime = DateTime.Now;
         }
 
         private void CancedlTestingTip()
@@ -168,7 +194,17 @@ namespace PictureMemoryTraining.Views
 
         private void MemoryPictureList_OnSequentialSelected(object sender, List<MemoryPictureItem> selectedItems)
         {
-            //TODO 记录顺序测试结果
+            //记录顺序测试结果
+            var memorizedPictureList = GetLastThreeMemorizedPictures();
+            for (int i = 0; i < 3; i++)
+            {
+                var memorizedPicture = memorizedPictureList[i];
+                var sequentialTestingClickInfo = _currentTestRecordInfo.SequentialTestingClickInfos[i];
+
+                var memorizedPictureName = Path.GetFileNameWithoutExtension(memorizedPicture.PictureItem.ImageUri);
+                sequentialTestingClickInfo.IsRight = sequentialTestingClickInfo.PictureName == memorizedPictureName;
+            }
+
             ResetMemoryPictureListStatus();
             StartLocationMemoryTesting();
             CurrentStateTextBlock.Text = "记忆还原-位置";
@@ -216,7 +252,7 @@ namespace PictureMemoryTraining.Views
             {
                 ClickMaxLimit = 3,
                 TrainingStage = TrainingStage.LocationTesting
-            });
+            }, _currentTestRecordInfo);
             memoryPictureListControl.MemoryPictureItems = pictureItems;
             memoryPictureListControl.PictureLocationComfirmed += MemoryPictureList_OnPictureLocationComfirmed;
             MemoryPictureListContentControl.Content = memoryPictureListControl;
@@ -227,11 +263,20 @@ namespace PictureMemoryTraining.Views
         private List<LocationMemoryPictureItem> _selectedLocationTestingPictureList = new List<LocationMemoryPictureItem>();
 
         public event EventHandler TestingCompleted;
-        private void MemoryPictureList_OnPictureLocationComfirmed(object sender, LocationMemoryPictureItem item)
+        private void MemoryPictureList_OnPictureLocationComfirmed(object sender, LocationMemoryPictureItem checkedPictureItem)
         {
-            //TODO 记录
+            //记录位置测试结果
+            var memorizedPictureList = GetLastThreeMemorizedPictures();
+            var memorizedMemoryPictureItem = memorizedPictureList.First(i => i.PictureItem == checkedPictureItem.PictureItem);
+            var isRightLocation = checkedPictureItem.Location == memorizedMemoryPictureItem.Location;
+            _currentTestRecordInfo.LocationTestingClickInfos.Add(new TestingClickInfo()
+            {
+                PictureName = Path.GetFileNameWithoutExtension(memorizedMemoryPictureItem.PictureItem.ImageUri),
+                ClickTime = DateTime.Now,
+                IsRight = isRightLocation ? checkedPictureItem.IsMatchedByUserComfirmed : !checkedPictureItem.IsMatchedByUserComfirmed
+            });
 
-            _selectedLocationTestingPictureList.Add(item);
+            _selectedLocationTestingPictureList.Add(checkedPictureItem);
             if (sender is MemoryPictureListControl memoryPictureListControl &&
                 _selectedLocationTestingPictureList.Count >= memoryPictureListControl.TrainingStageSetting.ClickMaxLimit)
             {
@@ -241,7 +286,6 @@ namespace PictureMemoryTraining.Views
             }
             else
             {
-                var memorizedPictureList = GetLastThreeMemorizedPictures();
                 var random = new Random();
                 MemoryPictureItem visibileRandomPictureItem = null;
                 while (visibileRandomPictureItem == null)

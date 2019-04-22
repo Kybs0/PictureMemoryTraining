@@ -88,7 +88,6 @@
     <Compile Include="Views\EditUserProfileView.xaml.cs">
       <DependentUpon>EditUserProfileView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Models\UserInfoMode.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -155,6 +154,9 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+    <Content Include="Resources\Files\ZL实验结果呈现.xlsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
