@@ -39,10 +39,11 @@ namespace PictureMemoryTraining.Views
         private List<int> _memoryCountOrderList = new List<int>() { 4, 5, 6 };
         private List<int> _usedmemoryCountOrderList = new List<int>();
 
-        private async Task StartLearning(bool isFirstLearning=false)
+        private async Task StartLearning(bool isFirstLearning = false)
         {
+            CurrentStateTextBlock.Text = isFirstLearning?"开始记忆": "继续记忆";
+            CurrentStateDetailTextBlock.Text = "依次点击图片，记忆此图片位置及点击的顺序";
             var clickMaxLimit = GetClickMaxLimit();
-
             ResetMemoryPictureListStatus();
 
             var memoryPictureItems = _memoryPictureItems;
@@ -134,6 +135,8 @@ namespace PictureMemoryTraining.Views
             CancedlTestingTip();
             ResetMemoryPictureListStatus();
             StartSequentialMemoryTest();
+            CurrentStateTextBlock.Text = "记忆还原-顺序";
+            CurrentStateDetailTextBlock.Text = "按照顺序点击刚记忆过的最后3个图片,选择完后点击确定";
         }
 
         private void StartSequentialMemoryTest()
@@ -169,6 +172,8 @@ namespace PictureMemoryTraining.Views
             //TODO 记录顺序测试结果
             ResetMemoryPictureListStatus();
             StartLocationMemoryTesting();
+            CurrentStateTextBlock.Text = "记忆还原-位置";
+            CurrentStateDetailTextBlock.Text = "判断该位置是否与学习阶段相同，是选勾，否选叉";
         }
 
         private void ResetMemoryPictureListStatus()
@@ -257,9 +262,9 @@ namespace PictureMemoryTraining.Views
 
         private async void CompleteOneRoundTest()
         {
-            if (_usedmemoryCountOrderList.Count< _memoryCountOrderList.Count)
+            if (_usedmemoryCountOrderList.Count < _memoryCountOrderList.Count)
             {
-               await StartLearning();
+                await StartLearning();
             }
             else
             {

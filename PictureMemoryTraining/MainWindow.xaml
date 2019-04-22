@@ -7,8 +7,8 @@
         xmlns:helper="clr-namespace:PictureMemoryTraining.Helper"
         xmlns:views="clr-namespace:PictureMemoryTraining.Views"
         mc:Ignorable="d"
-        Title="记忆大师" Height="1200" Width="1200" Icon="Resources/Images/Memory.ico"
-        WindowStyle="None" AllowsTransparency="True" WindowStartupLocation="CenterScreen"
+        Title="记忆大师" Height="1200" Width="1000" Icon="Resources/Images/Memory.ico"
+        WindowStyle="None" AllowsTransparency="True" WindowStartupLocation="CenterScreen" WindowState="Maximized"
         x:Name="TheMainWindow">
     <Window.Resources>
         <SolidColorBrush x:Key="Color.Text.Normal">#666666</SolidColorBrush>
@@ -74,17 +74,16 @@
         </ControlTemplate>
 
     </Window.Resources>
-    <Grid>
+    <Grid Margin="10">
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="60"/>
+            <RowDefinition/>
         </Grid.RowDefinitions>
-        <Grid MouseLeftButtonDown="HeaderGrid_OnMouseLeftButtonDown"  WindowChrome.IsHitTestVisibleInChrome="True">
-            <TextBlock Text="{Binding ElementName=TheMainWindow,Path=Title}" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="20"/>
-            <!-- 关闭按钮 -->
-            <Button Name="CloseButton" Style="{StaticResource Style.Button.Close}" Click="CloseButton_OnClick" 
-                    HorizontalAlignment="Right" VerticalAlignment="Top" ToolTip="关闭"/>
-        </Grid>
-        <views:MemoryTrainingView Grid.Row="1"></views:MemoryTrainingView>
+        <!-- 关闭按钮 -->
+        <Button x:Name="CloseButton" Style="{StaticResource Style.Button.Close}" Click="CloseButton_OnClick" 
+                HorizontalAlignment="Right" VerticalAlignment="Top" ToolTip="关闭" Height="40" Width="40"/>
+        <TextBlock Grid.Row="0" Text="{Binding ElementName=TheMainWindow,Path=Title}" Foreground="{StaticResource Brush.Text.Dark}" 
+                   HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="30"/>
+        <views:MainView Grid.Row="1"></views:MainView>
     </Grid>
 </Window>

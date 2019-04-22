@@ -34,6 +34,10 @@ namespace PictureMemoryTraining.Views
         public async void InitMemoryPictures(List<MemoryPictureItem> items)
         {
             _memoryPictureItems = items;
+
+            CurrentStateTextBlock.Text = "开始记忆";
+            CurrentStateDetailTextBlock.Text = "依次点击图片，记忆此图片位置及点击的顺序";
+
             foreach (var memoryPictureItem in items)
             {
                 memoryPictureItem.IsPictureEnabled = false;
@@ -85,6 +89,8 @@ namespace PictureMemoryTraining.Views
             CancedlTestingTip();
             ResetMemoryPictureListStatus();
             StartSequentialMemoryTest();
+            CurrentStateTextBlock.Text = "顺序测试";
+            CurrentStateDetailTextBlock.Text = "按照顺序点击刚学过的物体,选择完后点击确定";
         }
 
         private void StartSequentialMemoryTest()
@@ -120,6 +126,8 @@ namespace PictureMemoryTraining.Views
             //TODO 记录顺序测试结果
             ResetMemoryPictureListStatus();
             StartLocationMemoryTesting();
+            CurrentStateTextBlock.Text = "位置测试";
+            CurrentStateDetailTextBlock.Text = "判断该位置是否与学习阶段相同，是选勾，否选叉";
         }
 
         private void ResetMemoryPictureListStatus()

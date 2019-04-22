@@ -26,7 +26,7 @@
                             <Setter.Value>
                                 <ControlTemplate TargetType="ListBoxItem">
                                     <Border x:Name="RootBorder" BorderThickness="10" BorderBrush="#AFABAB" Background="White"
-                                            CornerRadius="40" Height="256" Width="256" Margin="5"
+                                            CornerRadius="40" Height="200" Width="200" Margin="5"
                                             ClipToBounds="True">
                                         <Grid VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10">
                                             <ContentPresenter ContentSource="{TemplateBinding Content}" />
@@ -49,10 +49,10 @@
             <Setter Property="ItemTemplate">
                 <Setter.Value>
                     <DataTemplate DataType="models:MemoryPictureItem">
-                        <Grid>
+                        <Border>
                             <Image x:Name="PictureImage" Source="{Binding Picture}" Visibility="Collapsed"
                                    Stretch="UniformToFill" SnapsToDevicePixels="True" ClipToBounds="True"/>
-                        </Grid>
+                        </Border>
                         <DataTemplate.Triggers>
                             <DataTrigger Binding="{Binding IsPictureVisibile}" Value="True">
                                 <Setter TargetName="PictureImage" Property="Visibility" Value="Visible"></Setter>
