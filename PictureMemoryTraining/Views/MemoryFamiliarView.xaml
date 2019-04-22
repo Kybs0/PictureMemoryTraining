@@ -9,7 +9,7 @@
     <Grid>
         <Grid VerticalAlignment="Center" Margin="0 -60 0 0">
             <ContentControl x:Name="MemoryPictureListContentControl"></ContentControl>
-            <StackPanel VerticalAlignment="Center" HorizontalAlignment="Left">
+            <StackPanel VerticalAlignment="Center" HorizontalAlignment="Left" Visibility="Collapsed">
                 <TextBlock x:Name="CurrentStateTextBlock" Foreground="{StaticResource Brush.Text.Normal}" FontSize="25"/>
                 <TextBlock x:Name="CurrentStateDetailTextBlock" Foreground="{StaticResource Brush.Text.Light}" FontSize="16" Margin="0 10 0 0"/>
             </StackPanel>

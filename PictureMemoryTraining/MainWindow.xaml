@@ -8,7 +8,7 @@
         xmlns:views="clr-namespace:PictureMemoryTraining.Views"
         mc:Ignorable="d"
         Title="记忆大师" Height="1200" Width="1000" Icon="Resources/Images/Memory.ico"
-        WindowStyle="None" AllowsTransparency="True" WindowStartupLocation="CenterScreen" WindowState="Maximized"
+        WindowStyle="None" AllowsTransparency="True" WindowStartupLocation="CenterScreen"
         x:Name="TheMainWindow">
     <Window.Resources>
         <SolidColorBrush x:Key="Color.Text.Normal">#666666</SolidColorBrush>
@@ -83,7 +83,7 @@
         <Button x:Name="CloseButton" Style="{StaticResource Style.Button.Close}" Click="CloseButton_OnClick" 
                 HorizontalAlignment="Right" VerticalAlignment="Top" ToolTip="关闭" Height="40" Width="40"/>
         <TextBlock Grid.Row="0" Text="{Binding ElementName=TheMainWindow,Path=Title}" Foreground="{StaticResource Brush.Text.Dark}" 
-                   HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="30"/>
+                   HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="30" Visibility="Collapsed"/>
         <views:MainView Grid.Row="1"></views:MainView>
     </Grid>
 </Window>
