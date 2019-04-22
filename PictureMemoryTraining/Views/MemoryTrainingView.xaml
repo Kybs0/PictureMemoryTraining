@@ -28,9 +28,9 @@
             </GroupBox>
             <GroupBox Header="Formal Test" FontSize="25" Margin="0,40">
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
-                    <Button x:Name="Test1Button" Content="Group 1" Click="TestButton_OnClick"></Button>
-                    <Button x:Name="Test2Button" Content="Group 2" Click="TestButton_OnClick"></Button>
-                    <Button x:Name="Test3Button" Content="Group 3" Click="TestButton_OnClick"></Button>
+                    <Button x:Name="Test1Button" Content="Group 1" Click="Test1Button_OnClick"></Button>
+                    <Button x:Name="Test2Button" Content="Group 2" Click="Test2Button_OnClick"></Button>
+                    <Button x:Name="Test3Button" Content="Group 3" Click="Test3Button_OnClick"></Button>
                 </StackPanel>
             </GroupBox>
         </StackPanel>

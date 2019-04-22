@@ -24,8 +24,6 @@ namespace PictureMemoryTraining.Views
         public MemoryTrainingView()
         {
             InitializeComponent();
-            var items = MemoryPictureItemsManager.GetMemoryPictures();
-            //MemoryPictureList.MemoryPictureItems = items;
         }
 
         public static readonly DependencyProperty CurrentProperty = DependencyProperty.Register(
@@ -63,10 +61,24 @@ namespace PictureMemoryTraining.Views
         #endregion
 
         #region 测试阶段
-
-        private void TestButton_OnClick(object sender, RoutedEventArgs e)
+        private void Test1Button_OnClick(object sender, RoutedEventArgs e)
         {
-            var items = MemoryPictureItemsManager.GetMemoryPictures();
+            //在程序运行期间，使用同一组图片
+            var items = MemoryPictureItemsManager.GetTest1MemoryPictures();
+            EnterTestingView(sender, items);
+        }
+        private void Test2Button_OnClick(object sender, RoutedEventArgs e)
+        {
+            var items = MemoryPictureItemsManager.GetTest2MemoryPictures();
+            EnterTestingView(sender, items);
+        }
+        private void Test3Button_OnClick(object sender, RoutedEventArgs e)
+        {
+            var items = MemoryPictureItemsManager.GetTest3MemoryPictures();
+            EnterTestingView(sender, items);
+        }
+        private void EnterTestingView(object sender, List<MemoryPictureItem> items)
+        {
             var memoryTestView = new MemoryTestView(items);
             memoryTestView.Tag = sender;
             memoryTestView.TestingCompleted += MemoryTestView_TestingCompleted;
