@@ -16,7 +16,7 @@
         </Grid>
         <Grid x:Name="OperationGrid" Background="White" Visibility="Collapsed">
             <TextBlock x:Name="OperationTipTextBlock" Visibility="Visible" 
-                       Foreground="{StaticResource Brush.Text.Normal}" FontSize="25" 
+                       Foreground="{StaticResource Brush.Text.Normal}" FontSize="30" 
                        VerticalAlignment="Center" HorizontalAlignment="Center"/>
         </Grid>
     </Grid>
