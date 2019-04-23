@@ -25,6 +25,15 @@ namespace PictureMemoryTraining.Views
         public EditUserProfileView()
         {
             InitializeComponent();
+            IsVisibleChanged += EditUserProfileView_IsVisibleChanged;
+        }
+
+        private void EditUserProfileView_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            if (e.NewValue is bool visible && visible)
+            {
+                TestDateTextBox.Text = DateTime.Now.ToString();
+            }
         }
 
         public event EventHandler<UserInfoMode> UserInfoInputed;
@@ -46,6 +55,10 @@ namespace PictureMemoryTraining.Views
                 Age = int.Parse(AgeTextBox.Text.Trim()),
                 TestDate = DateTime.Parse(TestDateTextBox.Text.Trim()),
             });
+            TestCodeTextBox.Text = string.Empty;
+            UserNameTextBox.Text = string.Empty;
+            AgeTextBox.Text = string.Empty;
+            TestDateTextBox.Text = string.Empty;
         }
     }
 }
