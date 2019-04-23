@@ -83,7 +83,7 @@ namespace PictureMemoryTraining.Business.Excel
         private static bool GetExcelPath(out string excelPath)
         {
             var baseDirectory = AppDomain.CurrentDomain.SetupInformation.ApplicationBase;
-            excelPath = Path.Combine(baseDirectory, @"Resources\Files\ZL实验结果呈现.xlsx");
+            excelPath = Path.Combine(baseDirectory, @"Output\ZL实验结果呈现.xlsx");
             if (!File.Exists(excelPath))
             {
                 MessageBox.Show("文件“ZL实验结果呈现.xlsx”未找到！");
