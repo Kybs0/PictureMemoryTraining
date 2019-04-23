@@ -58,7 +58,5 @@ namespace PictureMemoryTraining.Views
 
             MemoryPicturesExcelHelper.SaveMemoryTestData(_userDetailTestRecord);
         }
-
-
     }
 }

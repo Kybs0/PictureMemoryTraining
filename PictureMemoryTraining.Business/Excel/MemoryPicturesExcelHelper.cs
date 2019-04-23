@@ -15,15 +15,22 @@ namespace PictureMemoryTraining.Business.Excel
         {
             if (GetExcelPath(out var excelPath))
             {
-                Workbook workbook = new Workbook(excelPath);
-                var workbookWorksheet = workbook.Worksheets[0];
-                Cells cells = workbookWorksheet.Cells;
-                var startRow = cells.MaxDataRow;
-                SaveOneGroupTestInfo(recordInfo.UserInfo, recordInfo.Group1TestInfo, cells, startRow++);
-                SaveOneGroupTestInfo(recordInfo.UserInfo, recordInfo.Group2TestInfo, cells, startRow++);
-                SaveOneGroupTestInfo(recordInfo.UserInfo, recordInfo.Group3TestInfo, cells, startRow++);
-                workbookWorksheet.AutoFitColumns(); //自适应宽
-                workbook.Save(excelPath, SaveFormat.Auto);
+                try
+                {
+                    Workbook workbook = new Workbook(excelPath);
+                    var workbookWorksheet = workbook.Worksheets[0];
+                    Cells cells = workbookWorksheet.Cells;
+                    var startRow = cells.MaxDataRow;
+                    SaveOneGroupTestInfo(recordInfo.UserInfo, recordInfo.Group1TestInfo, cells, startRow++);
+                    SaveOneGroupTestInfo(recordInfo.UserInfo, recordInfo.Group2TestInfo, cells, startRow++);
+                    SaveOneGroupTestInfo(recordInfo.UserInfo, recordInfo.Group3TestInfo, cells, startRow++);
+                    workbookWorksheet.AutoFitColumns(); //自适应宽
+                    workbook.Save(excelPath, SaveFormat.Auto);
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show(e.Message);
+                }
             }
         }
 
@@ -38,8 +45,15 @@ namespace PictureMemoryTraining.Business.Excel
             cells[startRow, columnIndex++].Value = userInfo.TestDate.ToString("yyyy-MM-dd");
 
             //记录记忆信息
-            var fourPicturesTestInfo = groupTestInfo.FourPicturesUserTestRecordInfo;
-            cells[startRow, columnIndex++].Value = fourPicturesTestInfo.StartLearningTime;
+            SavePicturesUserTestInfoByStep(cells, startRow, ref columnIndex, groupTestInfo.FourPicturesUserTestRecordInfo);
+            SavePicturesUserTestInfoByStep(cells, startRow, ref columnIndex, groupTestInfo.FivePicturesUserTestRecordInfo);
+            SavePicturesUserTestInfoByStep(cells, startRow, ref columnIndex, groupTestInfo.SixPicturesUserTestRecordInfo);
+        }
+
+        private static void SavePicturesUserTestInfoByStep(Cells cells, int startRow, ref int columnIndex,
+            UserTestRecordInfo fourPicturesTestInfo)
+        {
+            cells[startRow, columnIndex++].Value = fourPicturesTestInfo.StartLearningTime.ToString("yyyy-MM-dd HH:mm:ss");
             for (int i = 0; i < fourPicturesTestInfo.LearningClickInfos.Count; i++)
             {
                 var learningClickInfo = fourPicturesTestInfo.LearningClickInfos[i];
@@ -48,7 +62,7 @@ namespace PictureMemoryTraining.Business.Excel
             }
 
             //记录测试数据
-            cells[startRow, columnIndex++].Value = fourPicturesTestInfo.StartTestingTime;
+            cells[startRow, columnIndex++].Value = fourPicturesTestInfo.StartTestingTime.ToString("yyyy-MM-dd HH:mm:ss");
             for (int i = 0; i < fourPicturesTestInfo.SequentialTestingClickInfos.Count; i++)
             {
                 var clickInfo = fourPicturesTestInfo.SequentialTestingClickInfos[i];

@@ -18,7 +18,7 @@
         <!--记忆训练-->
         <Grid x:Name="TrainingViewGrid"
               Visibility="{Binding ElementName=UserStartingGrid,Path=Visibility,Converter={StaticResource VisibilityReverseConverter}}">
-            <StackPanel Orientation="Horizontal" x:Name="UserStatusPanel" Margin="0 -60 0 0" VerticalAlignment="Top" HorizontalAlignment="Center" >
+            <StackPanel Orientation="Horizontal" x:Name="UserStatusPanel" Margin="0 -40 0 0" VerticalAlignment="Top" HorizontalAlignment="Center" >
                 <TextBlock Text="{Binding ElementName=TheMainView,Path=UserInfo.TestCode,StringFormat={} {0} -}"/>
                 <TextBlock Text="{Binding ElementName=TheMainView,Path=UserInfo.UserName,StringFormat={} {0} -}"/>
                 <TextBlock Text="{Binding ElementName=TheMainView,Path=UserInfo.ConsumingSeconds,StringFormat={} {0} s}" 

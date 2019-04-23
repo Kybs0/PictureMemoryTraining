@@ -38,7 +38,7 @@
             <ContentControl x:Name="TraingViewCotnentControl"/>
             <Button x:Name="QuitButton" Content="Quit" Foreground="{StaticResource Brush.Text.Warning.Normal}" 
                     HorizontalAlignment="Right" VerticalAlignment="Bottom" Visibility="Collapsed"
-                    FontSize="25" Margin="20" Padding="10,6" Click="QuitButton_OnClick" BorderThickness="0"/>
+                    FontSize="25" Margin="40" Padding="10,6" Click="QuitButton_OnClick" BorderThickness="0"/>
         </Grid>
     </Grid>
 </UserControl>
