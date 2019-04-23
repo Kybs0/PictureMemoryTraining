@@ -15,7 +15,7 @@ namespace PictureMemoryTraining.Business.Excel
         {
             if (GetExcelPath(out var excelPath))
             {
-                Workbook workbook = new Workbook(excelPath, new LoadOptions(LoadFormat.Auto));
+                Workbook workbook = new Workbook(excelPath);
                 var workbookWorksheet = workbook.Worksheets[0];
                 Cells cells = workbookWorksheet.Cells;
                 var startRow = cells.MaxDataRow;
@@ -23,7 +23,6 @@ namespace PictureMemoryTraining.Business.Excel
                 SaveOneGroupTestInfo(recordInfo.UserInfo, recordInfo.Group2TestInfo, cells, startRow++);
                 SaveOneGroupTestInfo(recordInfo.UserInfo, recordInfo.Group3TestInfo, cells, startRow++);
                 workbookWorksheet.AutoFitColumns(); //自适应宽
-                File.Delete(excelPath);
                 workbook.Save(excelPath, SaveFormat.Auto);
             }
         }

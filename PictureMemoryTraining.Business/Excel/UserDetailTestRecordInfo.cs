@@ -22,27 +22,29 @@ namespace PictureMemoryTraining.Business.Excel
     public class UserTestRecordInfo
     {
         public DateTime StartLearningTime { get; set; }
-        public List<LearningClickInfo> LearningClickInfos = new List<LearningClickInfo>()
-        {
-            new LearningClickInfo(),
-            new LearningClickInfo(),
-            new LearningClickInfo()
-        };
-
-
+        public List<LearningClickInfo> LearningClickInfos = new List<LearningClickInfo>();
         public DateTime StartTestingTime { get; set; }
-        public List<TestingClickInfo> SequentialTestingClickInfos = new List<TestingClickInfo>()
-        {
-            new TestingClickInfo(),
-            new TestingClickInfo(),
-            new TestingClickInfo()
-        };
+        public List<TestingClickInfo> SequentialTestingClickInfos = new List<TestingClickInfo>();
+        public List<TestingClickInfo> LocationTestingClickInfos = new List<TestingClickInfo>();
 
-        public List<TestingClickInfo> LocationTestingClickInfos = new List<TestingClickInfo>()        {
-            new TestingClickInfo(),
-            new TestingClickInfo(),
-            new TestingClickInfo()
-        };
+        //public List<LearningClickInfo> LearningClickInfos = new List<LearningClickInfo>()
+        //{
+        //    new LearningClickInfo(),
+        //    new LearningClickInfo(),
+        //    new LearningClickInfo()
+        //};
+        //public DateTime StartTestingTime { get; set; }
+        //public List<TestingClickInfo> SequentialTestingClickInfos = new List<TestingClickInfo>()
+        //{
+        //    new TestingClickInfo(),
+        //    new TestingClickInfo(),
+        //    new TestingClickInfo()
+        //};
+        //public List<TestingClickInfo> LocationTestingClickInfos = new List<TestingClickInfo>()        {
+        //    new TestingClickInfo(),
+        //    new TestingClickInfo(),
+        //    new TestingClickInfo()
+        //};
     }
 
     public class TestingClickInfo
