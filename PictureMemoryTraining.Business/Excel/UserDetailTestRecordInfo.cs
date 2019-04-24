@@ -50,6 +50,10 @@ namespace PictureMemoryTraining.Business.Excel
     public class TestingClickInfo
     {
         public string PictureName { get; set; }
+        /// <summary>
+        /// 点击时图片所在的位置
+        /// </summary>
+        public int Location { get; set; }
         public DateTime ClickTime { get; set; }
         public bool IsRight { get; set; }
     }
@@ -57,6 +61,10 @@ namespace PictureMemoryTraining.Business.Excel
     public class LearningClickInfo
     {
         public string PictureName { get; set; }
+        /// <summary>
+        /// 点击时图片所在的位置
+        /// </summary>
+        public int Location { get; set; }
         public DateTime ClickTime { get; set; }
     }
 }

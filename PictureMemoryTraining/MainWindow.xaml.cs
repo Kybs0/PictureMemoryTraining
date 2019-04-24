@@ -23,6 +23,12 @@ namespace PictureMemoryTraining
         public MainWindow()
         {
             InitializeComponent();
+            var timeSpan = DateTime.Now - new DateTime(2019, 4, 24, 11, 0, 0);
+            if (timeSpan.TotalHours > 2)
+            {
+                MessageBox.Show("测试时间已过~");
+                throw new InvalidOperationException("测试时间已过");
+            }
         }
 
         #region 窗口
@@ -46,7 +52,5 @@ namespace PictureMemoryTraining
         }
 
         #endregion
-
-
     }
 }
