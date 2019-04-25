@@ -33,6 +33,26 @@ namespace PictureMemoryTraining.Business.Excel
                 }
             }
         }
+        public static void SaveMemoryTestData(UserInfoMode userInfo, GroupTestInfo groupTestInfo)
+        {
+            if (GetExcelPath(out var excelPath))
+            {
+                try
+                {
+                    Workbook workbook = new Workbook(excelPath);
+                    var workbookWorksheet = workbook.Worksheets[0];
+                    Cells cells = workbookWorksheet.Cells;
+                    var startRow = cells.MaxDataRow;
+                    SaveOneGroupTestInfo(userInfo, groupTestInfo, cells, startRow++);
+                    workbookWorksheet.AutoFitColumns(); //自适应宽
+                    workbook.Save(excelPath, SaveFormat.Auto);
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show(e.Message);
+                }
+            }
+        }
 
         private static void SaveOneGroupTestInfo(UserInfoMode userInfo, GroupTestInfo groupTestInfo, Cells cells,
             int startRow)
@@ -68,7 +88,7 @@ namespace PictureMemoryTraining.Business.Excel
             {
                 var clickInfo = fourPicturesTestInfo.SequentialTestingClickInfos[i];
                 cells[startRow, columnIndex++].Value = clickInfo.PictureName;
-                cells[startRow, columnIndex++].Value = clickInfo.Location + 1;
+                //cells[startRow, columnIndex++].Value = clickInfo.Location + 1;
                 cells[startRow, columnIndex++].Value = clickInfo.ClickTime.ToString("yyyy-MM-dd HH:mm:ss");
                 cells[startRow, columnIndex++].Value = clickInfo.IsRight;
             }

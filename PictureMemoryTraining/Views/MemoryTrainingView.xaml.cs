@@ -97,6 +97,20 @@ namespace PictureMemoryTraining.Views
             {
                 TraingViewCotnentControl.Content = null;
                 button.IsEnabled = false;
+
+                //记录
+                if (button == Test1Button)
+                {
+                    MemoryPicturesExcelHelper.SaveMemoryTestData(_userDetailTestRecord.UserInfo, _userDetailTestRecord.Group1TestInfo);
+                }
+                else if (button == Test2Button)
+                {
+                    MemoryPicturesExcelHelper.SaveMemoryTestData(_userDetailTestRecord.UserInfo, _userDetailTestRecord.Group2TestInfo);
+                }
+                else
+                {
+                    MemoryPicturesExcelHelper.SaveMemoryTestData(_userDetailTestRecord.UserInfo, _userDetailTestRecord.Group3TestInfo);
+                }
             }
 
             if (Test1Button.IsEnabled == false && Test2Button.IsEnabled == false && Test3Button.IsEnabled == false)

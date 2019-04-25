@@ -56,7 +56,7 @@ namespace PictureMemoryTraining.Views
             UserStartingGrid.Visibility = Visibility.Visible;
             StartTrainingButton.Visibility = Visibility.Visible;
 
-            MemoryPicturesExcelHelper.SaveMemoryTestData(_userDetailTestRecord);
+            //MemoryPicturesExcelHelper.SaveMemoryTestData(_userDetailTestRecord);
         }
     }
 }
