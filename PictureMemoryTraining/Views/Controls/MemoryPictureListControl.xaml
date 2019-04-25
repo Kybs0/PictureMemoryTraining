@@ -131,15 +131,15 @@
                  ItemsSource="{Binding ElementName=TheMemoryPictureListControl,Path=MemoryPictureItems}">
         </ListBox>
 
-        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0 0 40 0">
+        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0 0 80 0">
             <Button x:Name="ComfirmButton"
                     Foreground="{StaticResource Brush.Accent.Light}"
                     Visibility="Collapsed" IsEnabled="False" Click="ComfirmButton_OnClick">
                 <Button.Template>
                     <ControlTemplate TargetType="Button">
                         <Border x:Name="RootBorder"
-                                BorderThickness="8" BorderBrush="#AFABAB" Background="White"
-                                CornerRadius="32" Height="160" Width="160"
+                                BorderThickness="5" BorderBrush="#AFABAB" Background="White"
+                                CornerRadius="20" Height="100" Width="100"
                                 ClipToBounds="True" RenderTransformOrigin="0.5,0.5">
                             <Image x:Name="ContentImage" Source="{StaticResource Image.Ok.Normal}" Stretch="Uniform" Margin="10"></Image>
                         </Border>
@@ -162,8 +162,8 @@
                 <Button.Template>
                     <ControlTemplate TargetType="Button">
                         <Border x:Name="RootBorder"
-                                BorderThickness="8" BorderBrush="#AFABAB" Background="White"
-                                CornerRadius="32" Height="160" Width="160"
+                                BorderThickness="5" BorderBrush="#AFABAB" Background="White"
+                                CornerRadius="20" Height="100" Width="100"
                                 ClipToBounds="True" RenderTransformOrigin="0.5,0.5">
                             <Image x:Name="ContentImage" Source="{StaticResource Image.Ok.LightGray}" Stretch="Uniform" Margin="10"></Image>
                         </Border>
@@ -183,10 +183,10 @@
                 <Button.Template>
                     <ControlTemplate TargetType="Button">
                         <Border x:Name="RootBorder"
-                                BorderThickness="8" BorderBrush="#AFABAB" Background="White"
-                                CornerRadius="32" Height="160" Width="160"
+                                BorderThickness="5" BorderBrush="#AFABAB" Background="White"
+                                CornerRadius="20" Height="100" Width="100"
                                 ClipToBounds="True" RenderTransformOrigin="0.5,0.5">
-                            <Image x:Name="ContentImage" Source="{StaticResource Image.No.LightGray}" Stretch="Uniform" Margin="20"></Image>
+                            <Image x:Name="ContentImage" Source="{StaticResource Image.No.LightGray}" Stretch="Uniform" Margin="16"></Image>
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">

@@ -79,6 +79,9 @@
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="ContentImage" Property="Source" Value="{StaticResource Image.Quit.Normal}"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
                                 <Setter TargetName="ContentImage" Property="Source" Value="{StaticResource Image.Quit.Dark}"/>
                             </Trigger>
                         </ControlTemplate.Triggers>
