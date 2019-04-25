@@ -58,6 +58,7 @@ namespace PictureMemoryTraining.Business.Excel
             {
                 var learningClickInfo = fourPicturesTestInfo.LearningClickInfos[i];
                 cells[startRow, columnIndex++].Value = learningClickInfo.PictureName;
+                cells[startRow, columnIndex++].Value = learningClickInfo.Location;
                 cells[startRow, columnIndex++].Value = learningClickInfo.ClickTime.ToString("yyyy-MM-dd HH:mm:ss");
             }
 
@@ -67,6 +68,7 @@ namespace PictureMemoryTraining.Business.Excel
             {
                 var clickInfo = fourPicturesTestInfo.SequentialTestingClickInfos[i];
                 cells[startRow, columnIndex++].Value = clickInfo.PictureName;
+                cells[startRow, columnIndex++].Value = clickInfo.Location;
                 cells[startRow, columnIndex++].Value = clickInfo.ClickTime.ToString("yyyy-MM-dd HH:mm:ss");
                 cells[startRow, columnIndex++].Value = clickInfo.IsRight;
             }
@@ -75,6 +77,7 @@ namespace PictureMemoryTraining.Business.Excel
             {
                 var clickInfo = fourPicturesTestInfo.LocationTestingClickInfos[i];
                 cells[startRow, columnIndex++].Value = clickInfo.PictureName;
+                cells[startRow, columnIndex++].Value = clickInfo.Location;
                 cells[startRow, columnIndex++].Value = clickInfo.ClickTime.ToString("yyyy-MM-dd HH:mm:ss");
                 cells[startRow, columnIndex++].Value = clickInfo.IsRight;
             }

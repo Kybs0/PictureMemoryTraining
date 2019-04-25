@@ -190,10 +190,12 @@ namespace PictureMemoryTraining.Views
                 if (_selectedSequentialPictureList.All(i => i != memoryPictureItem))
                 {
                     _selectedSequentialPictureList.Add(memoryPictureItem);
+                    //记录顺序点击信息
                     _testRecordInfo.SequentialTestingClickInfos.Add(new TestingClickInfo()
                     {
                         ClickTime = DateTime.Now,
-                        PictureName = Path.GetFileNameWithoutExtension(memoryPictureItem.ImageUri)
+                        PictureName = Path.GetFileNameWithoutExtension(memoryPictureItem.ImageUri),
+                        Location = MemoryPictureItems.IndexOf(memoryPictureItem)
                     });
                 }
             }

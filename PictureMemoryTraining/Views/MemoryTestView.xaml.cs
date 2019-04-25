@@ -273,6 +273,7 @@ namespace PictureMemoryTraining.Views
             {
                 PictureName = Path.GetFileNameWithoutExtension(memorizedMemoryPictureItem.PictureItem.ImageUri),
                 ClickTime = DateTime.Now,
+                Location = checkedPictureItem.Location,
                 IsRight = isRightLocation ? checkedPictureItem.IsMatchedByUserComfirmed : !checkedPictureItem.IsMatchedByUserComfirmed
             });
 
