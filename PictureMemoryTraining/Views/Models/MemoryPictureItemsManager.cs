@@ -9,34 +9,53 @@ namespace PictureMemoryTraining.Views.Models
 {
     public static class MemoryPictureItemsManager
     {
+        private static List<MemoryPictureItem> _learning1MemoryPictures = null;
+        public static List<MemoryPictureItem> GetLearning1MemoryPictures()
+        {
+            var memoryPictureItems = _learning1MemoryPictures ?? (_learning1MemoryPictures = GetMemoryPictures()[0]);
+            return memoryPictureItems;
+        }
+        private static List<MemoryPictureItem> _learning2MemoryPictures = null;
+        public static List<MemoryPictureItem> GetLearning2MemoryPictures()
+        {
+            var memoryPictureItems = _learning2MemoryPictures ?? (_learning2MemoryPictures = GetMemoryPictures()[1]);
+            return memoryPictureItems;
+        }
+
         private static List<MemoryPictureItem> _test1MemoryPictures = null;
         public static List<MemoryPictureItem> GetTest1MemoryPictures()
         {
-            var memoryPictureItems = _test1MemoryPictures ?? (_test1MemoryPictures = GetMemoryPictures());
+            var memoryPictureItems = _test1MemoryPictures ?? (_test1MemoryPictures = GetMemoryPictures()[2]);
             return memoryPictureItems;
         }
         private static List<MemoryPictureItem> _test2MemoryPictures = null;
         public static List<MemoryPictureItem> GetTest2MemoryPictures()
         {
-            var memoryPictureItems = _test2MemoryPictures ?? (_test2MemoryPictures = GetMemoryPictures());
+            var memoryPictureItems = _test2MemoryPictures ?? (_test2MemoryPictures = GetMemoryPictures()[3]);
             return memoryPictureItems;
         }
 
         private static List<MemoryPictureItem> _test3MemoryPictures = null;
         public static List<MemoryPictureItem> GetTest3MemoryPictures()
         {
-            var memoryPictureItems = _test3MemoryPictures ?? (_test3MemoryPictures = GetMemoryPictures());
+            var memoryPictureItems = _test3MemoryPictures ?? (_test3MemoryPictures = GetMemoryPictures()[4]);
             return memoryPictureItems;
         }
 
-        public static List<MemoryPictureItem> GetMemoryPictures()
+
+        private static List<List<MemoryPictureItem>> _allMemoryPictures = null;
+        private static List<List<MemoryPictureItem>> GetMemoryPictures()
         {
-            var memoryPictures = MemoryPictureManager.GetMemoryPictures();
-            var memoryPictureItems = memoryPictures.Select(i => new MemoryPictureItem()
+            if (_allMemoryPictures == null)
             {
-                ImageUri = i
-            }).ToList();
-            return memoryPictureItems;
+                var memoryPictures = MemoryPictureManager.GetMemoryPictureGroups();
+                _allMemoryPictures = memoryPictures.Select(i => i.Select(j => new MemoryPictureItem()
+                {
+                    ImageUri = j
+                }).ToList()).ToList();
+            }
+
+            return _allMemoryPictures;
         }
     }
 }

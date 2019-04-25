@@ -53,6 +53,7 @@ namespace PictureMemoryTraining.Views
         private UserDetailTestRecordInfo _userDetailTestRecord = new UserDetailTestRecordInfo();
         private void MemoryTrainingView_OnTestingCompleted(object sender, EventArgs e)
         {
+            MessageBox.Show(Window.GetWindow(this), "测试结束，谢谢！");
             UserStartingGrid.Visibility = Visibility.Visible;
             StartTrainingButton.Visibility = Visibility.Visible;
 

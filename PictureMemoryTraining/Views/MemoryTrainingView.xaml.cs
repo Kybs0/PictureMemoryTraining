@@ -40,7 +40,7 @@ namespace PictureMemoryTraining.Views
 
         #region 熟悉阶段
 
-        private void FamiliarButton_OnClick(object sender, RoutedEventArgs e)
+        private void Familiar1Button_OnClick(object sender, RoutedEventArgs e)
         {
             var memoryFamiliarView = new MemoryFamiliarView();
             memoryFamiliarView.Tag = sender;
@@ -49,7 +49,19 @@ namespace PictureMemoryTraining.Views
             TraingViewCotnentControl.Content = memoryFamiliarView;
             QuitButton.Visibility = Visibility.Visible;
 
-            var items = MemoryPictureItemsManager.GetMemoryPictures();
+            var items = MemoryPictureItemsManager.GetLearning1MemoryPictures();
+            memoryFamiliarView.InitMemoryPictures(items);
+        }
+        private void Familiar2Button_OnClick(object sender, RoutedEventArgs e)
+        {
+            var memoryFamiliarView = new MemoryFamiliarView();
+            memoryFamiliarView.Tag = sender;
+            memoryFamiliarView.TestingCompleted += MemoryFamiliarView_TestingCompleted;
+
+            TraingViewCotnentControl.Content = memoryFamiliarView;
+            QuitButton.Visibility = Visibility.Visible;
+
+            var items = MemoryPictureItemsManager.GetLearning2MemoryPictures();
             memoryFamiliarView.InitMemoryPictures(items);
         }
 
@@ -137,5 +149,6 @@ namespace PictureMemoryTraining.Views
             TraingViewCotnentControl.Content = null;
             QuitButton.Visibility = Visibility.Collapsed;
         }
+
     }
 }

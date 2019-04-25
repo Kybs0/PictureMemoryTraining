@@ -8,7 +8,7 @@
         xmlns:views="clr-namespace:PictureMemoryTraining.Views"
         mc:Ignorable="d"
         Title="记忆大师" Width="1368" Height="912" Icon="Resources/Images/Memory.ico" 
-        WindowStyle="None" AllowsTransparency="True" WindowStartupLocation="CenterScreen"
+        WindowStyle="None" AllowsTransparency="True" WindowStartupLocation="CenterScreen" WindowState="Maximized"
         x:Name="TheMainWindow">
     <Window.Resources>
         <SolidColorBrush x:Key="Color.Text.Normal">#666666</SolidColorBrush>

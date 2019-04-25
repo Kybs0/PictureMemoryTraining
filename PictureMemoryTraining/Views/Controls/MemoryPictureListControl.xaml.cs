@@ -141,7 +141,7 @@ namespace PictureMemoryTraining.Views
             if (sender is Button button)
             {
                 button.IsEnabled = false;
-                await Task.Delay(TimeSpan.FromMilliseconds(600));
+                await Task.Delay(TimeSpan.FromMilliseconds(400));
                 var memoryPictureItem = MemoryPictureItems.First(i => i.IsPictureVisibile);
                 memoryPictureItem.IsPictureVisibile = false;
                 memoryPictureItem.IsPictureCovered = true;

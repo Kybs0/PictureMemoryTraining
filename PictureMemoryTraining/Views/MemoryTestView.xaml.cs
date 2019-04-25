@@ -134,9 +134,10 @@ namespace PictureMemoryTraining.Views
         private List<MemorizedMemoryPictureItem> GetLastThreeMemorizedPictures()
         {
             var memorizedMemoryPictureItems = _memorizedPictureList.ToList();
-            memorizedMemoryPictureItems.Reverse();
-            var memoryPictureItems = memorizedMemoryPictureItems.Take(3);
-            memoryPictureItems.Reverse();
+            var memoryPictureItems = new List<MemorizedMemoryPictureItem>();
+            memoryPictureItems.Add(memorizedMemoryPictureItems[memorizedMemoryPictureItems.Count - 3]);
+            memoryPictureItems.Add(memorizedMemoryPictureItems[memorizedMemoryPictureItems.Count - 2]);
+            memoryPictureItems.Add(memorizedMemoryPictureItems[memorizedMemoryPictureItems.Count - 1]);
             return memoryPictureItems.ToList();
         }
 
@@ -243,8 +244,8 @@ namespace PictureMemoryTraining.Views
             pictureItems.ForEach(i => i.IsPictureCovered = true);
 
             //初始化图片
-            var visibileRandomIndex = random.Next(memorizedPictureList.Count);
-            var visibileRandomPictureItem = memorizedPictureList[visibileRandomIndex].PictureItem;
+            //var visibileRandomIndex = random.Next(memorizedPictureList.Count);
+            var visibileRandomPictureItem = memorizedPictureList[0].PictureItem;
             visibileRandomPictureItem.IsPictureVisibile = true;
 
             //添加控件内容
@@ -291,8 +292,8 @@ namespace PictureMemoryTraining.Views
                 MemoryPictureItem visibileRandomPictureItem = null;
                 while (visibileRandomPictureItem == null)
                 {
-                    var visibileRandomIndex = random.Next(memorizedPictureList.Count);
-                    var randomPictureItem = memorizedPictureList[visibileRandomIndex].PictureItem;
+                    //var visibileRandomIndex = random.Next(memorizedPictureList.Count);
+                    var randomPictureItem = memorizedPictureList[_selectedLocationTestingPictureList.Count].PictureItem;
                     if (_selectedLocationTestingPictureList.All(i => i.PictureItem != randomPictureItem))
                     {
                         visibileRandomPictureItem = randomPictureItem;
