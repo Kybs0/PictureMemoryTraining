@@ -74,6 +74,7 @@
         </ControlTemplate>
 
     </Window.Resources>
+<Border BorderBrush="Gainsboro" BorderThickness="1">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="60"/>
@@ -84,4 +85,5 @@
                 HorizontalAlignment="Right" VerticalAlignment="Top" ToolTip="关闭" />
         <views:MainView Grid.Row="1"></views:MainView>
     </Grid>
+    </Border>
 </Window>

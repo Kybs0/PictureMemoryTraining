@@ -90,7 +90,6 @@ namespace PictureMemoryTraining.Views
             QuitButton.Visibility = Visibility.Visible;
         }
         public event EventHandler TestingCompleted;
-        private UserDetailTestRecordInfo _userDetailTestRecord = new UserDetailTestRecordInfo();
         private void MemoryTestView_TestingCompleted(object sender, EventArgs e)
         {
             if (sender is MemoryTestView memoryTestView && memoryTestView.Tag is Button button)
@@ -101,15 +100,15 @@ namespace PictureMemoryTraining.Views
                 //记录
                 if (button == Test1Button)
                 {
-                    MemoryPicturesExcelHelper.SaveMemoryTestData(_userDetailTestRecord.UserInfo, _userDetailTestRecord.Group1TestInfo);
+                    MemoryPicturesExcelHelper.SaveMemoryTestData(UserDetailTestRecord.UserInfo, UserDetailTestRecord.Group1TestInfo);
                 }
                 else if (button == Test2Button)
                 {
-                    MemoryPicturesExcelHelper.SaveMemoryTestData(_userDetailTestRecord.UserInfo, _userDetailTestRecord.Group2TestInfo);
+                    MemoryPicturesExcelHelper.SaveMemoryTestData(UserDetailTestRecord.UserInfo, UserDetailTestRecord.Group2TestInfo);
                 }
                 else
                 {
-                    MemoryPicturesExcelHelper.SaveMemoryTestData(_userDetailTestRecord.UserInfo, _userDetailTestRecord.Group3TestInfo);
+                    MemoryPicturesExcelHelper.SaveMemoryTestData(UserDetailTestRecord.UserInfo, UserDetailTestRecord.Group3TestInfo);
                 }
             }
 
@@ -125,15 +124,15 @@ namespace PictureMemoryTraining.Views
         {
             if (Test1Button.IsEnabled)
             {
-                _userDetailTestRecord.Group1TestInfo = new GroupTestInfo();
+                UserDetailTestRecord.Group1TestInfo = new GroupTestInfo();
             }
             if (Test2Button.IsEnabled)
             {
-                _userDetailTestRecord.Group2TestInfo = new GroupTestInfo();
+                UserDetailTestRecord.Group2TestInfo = new GroupTestInfo();
             }
             if (Test3Button.IsEnabled)
             {
-                _userDetailTestRecord.Group3TestInfo = new GroupTestInfo();
+                UserDetailTestRecord.Group3TestInfo = new GroupTestInfo();
             }
             TraingViewCotnentControl.Content = null;
             QuitButton.Visibility = Visibility.Collapsed;
