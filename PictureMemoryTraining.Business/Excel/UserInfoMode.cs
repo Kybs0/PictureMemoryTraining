@@ -7,7 +7,7 @@ namespace PictureMemoryTraining.Business.Excel
     {
         public string TestCode { get; set; }
         public string UserName { get; set; }
-        public int Age { get; set; }
+        public double Age { get; set; }
         public DateTime TestDate { get; set; }
 
         private int _consumingTime = 0;

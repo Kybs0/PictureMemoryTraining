@@ -52,7 +52,7 @@ namespace PictureMemoryTraining.Views
             {
                 TestCode = TestCodeTextBox.Text.Trim(),
                 UserName = UserNameTextBox.Text.Trim(),
-                Age = int.Parse(AgeTextBox.Text.Trim()),
+                Age = double.Parse(AgeTextBox.Text.Trim()),
                 TestDate = DateTime.Parse(TestDateTextBox.Text.Trim()),
             });
             TestCodeTextBox.Text = string.Empty;

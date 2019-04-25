@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:PictureMemoryTraining.Views"
+             xmlns:controls="clr-namespace:PictureMemoryTraining.Views.Controls"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
@@ -12,6 +13,14 @@
             <Setter Property="Foreground" Value="{StaticResource Brush.Text.Normal}"/>
         </Style>
         <Style TargetType="TextBox">
+            <Setter Property="FontSize" Value="18"></Setter>
+            <Setter Property="Foreground" Value="{StaticResource Brush.Text.Normal}"/>
+            <Setter Property="Padding" Value="4"></Setter>
+            <Setter Property="MinWidth" Value="220"></Setter>
+            <Setter Property="MinHeight" Value="30"></Setter>
+            <Setter Property="VerticalAlignment" Value="Center"></Setter>
+        </Style>
+        <Style TargetType="controls:LimitedTextBox">
             <Setter Property="FontSize" Value="18"></Setter>
             <Setter Property="Foreground" Value="{StaticResource Brush.Text.Normal}"/>
             <Setter Property="Padding" Value="4"></Setter>
@@ -44,7 +53,9 @@
             <TextBox x:Name="UserNameTextBox" VerticalAlignment="Center" Grid.Row="2" Grid.Column="1"/>
 
             <TextBlock Text="年龄：" VerticalAlignment="Center" HorizontalAlignment="Right" Grid.Row="3" Grid.Column="0"/>
-            <TextBox x:Name="AgeTextBox" VerticalAlignment="Center" Grid.Row="3" Grid.Column="1" InputScope="Number"/>
+            <controls:LimitedTextBox x:Name="AgeTextBox"  VerticalAlignment="Center"
+                                     Grid.Row="3" Grid.Column="1"
+                                     LimitType="NumberOnly" AllowDecimal="True" InputScope="Number" />
 
             <TextBlock Text="实验日期：" VerticalAlignment="Center" HorizontalAlignment="Right" Grid.Row="4" Grid.Column="0"/>
             <DatePicker x:Name="TestDateTextBox" VerticalAlignment="Center"  InputScope="Date" VerticalContentAlignment="Center"
