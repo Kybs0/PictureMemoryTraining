@@ -255,7 +255,8 @@ namespace PictureMemoryTraining.Views
                 _testRecordInfo.LearningClickInfos.Add(new LearningClickInfo()
                 {
                     ClickTime = DateTime.Now,
-                    PictureName = Path.GetFileNameWithoutExtension(memoryPictureItem.ImageUri)
+                    PictureName = Path.GetFileNameWithoutExtension(memoryPictureItem.ImageUri),
+                    Location = MemoryPictureItems.IndexOf(memoryPictureItem)
                 });
             }
             //如果由显示改为关闭，则说明已经记忆过此图片

@@ -88,7 +88,7 @@ namespace PictureMemoryTraining.Business.Excel
             {
                 var clickInfo = fourPicturesTestInfo.SequentialTestingClickInfos[i];
                 cells[startRow, columnIndex++].Value = clickInfo.PictureName;
-                cells[startRow, columnIndex++].Value = string.Empty;
+                //cells[startRow, columnIndex++].Value = string.Empty;位置信息无意义
                 cells[startRow, columnIndex++].Value = clickInfo.ClickTime.ToString("yyyy-MM-dd HH:mm:ss");
                 cells[startRow, columnIndex++].Value = clickInfo.IsRight;
             }
