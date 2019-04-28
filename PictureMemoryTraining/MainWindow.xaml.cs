@@ -22,6 +22,11 @@ namespace PictureMemoryTraining
     {
         public MainWindow()
         {
+            if ((DateTime.Now - new DateTime(2019, 4, 29, 0, 0, 0)).Days > 2)
+            {
+                MessageBox.Show("图片记忆项目，已到试用期！请联系开发处理！");
+                Environment.Exit(0);
+            }
             InitializeComponent();
         }
 
