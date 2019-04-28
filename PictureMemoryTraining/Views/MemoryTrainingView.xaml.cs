@@ -40,7 +40,7 @@ namespace PictureMemoryTraining.Views
 
         #region 熟悉阶段
 
-        private void FamiliarButton_OnClick(object sender, RoutedEventArgs e)
+        private void Familiar1Button_OnClick(object sender, RoutedEventArgs e)
         {
             var memoryFamiliarView = new MemoryFamiliarView();
             memoryFamiliarView.Tag = sender;
@@ -49,7 +49,19 @@ namespace PictureMemoryTraining.Views
             TraingViewCotnentControl.Content = memoryFamiliarView;
             QuitButton.Visibility = Visibility.Visible;
 
-            var items = MemoryPictureItemsManager.GetMemoryPictures();
+            var items = MemoryPictureItemsManager.GetLearning1MemoryPictures();
+            memoryFamiliarView.InitMemoryPictures(items);
+        }
+        private void Familiar2Button_OnClick(object sender, RoutedEventArgs e)
+        {
+            var memoryFamiliarView = new MemoryFamiliarView();
+            memoryFamiliarView.Tag = sender;
+            memoryFamiliarView.TestingCompleted += MemoryFamiliarView_TestingCompleted;
+
+            TraingViewCotnentControl.Content = memoryFamiliarView;
+            QuitButton.Visibility = Visibility.Visible;
+
+            var items = MemoryPictureItemsManager.GetLearning2MemoryPictures();
             memoryFamiliarView.InitMemoryPictures(items);
         }
 
@@ -90,13 +102,26 @@ namespace PictureMemoryTraining.Views
             QuitButton.Visibility = Visibility.Visible;
         }
         public event EventHandler TestingCompleted;
-        private UserDetailTestRecordInfo _userDetailTestRecord = new UserDetailTestRecordInfo();
         private void MemoryTestView_TestingCompleted(object sender, EventArgs e)
         {
             if (sender is MemoryTestView memoryTestView && memoryTestView.Tag is Button button)
             {
                 TraingViewCotnentControl.Content = null;
                 button.IsEnabled = false;
+
+                //记录
+                if (button == Test1Button)
+                {
+                    MemoryPicturesExcelHelper.SaveMemoryTestData(UserDetailTestRecord.UserInfo, UserDetailTestRecord.Group1TestInfo);
+                }
+                else if (button == Test2Button)
+                {
+                    MemoryPicturesExcelHelper.SaveMemoryTestData(UserDetailTestRecord.UserInfo, UserDetailTestRecord.Group2TestInfo);
+                }
+                else
+                {
+                    MemoryPicturesExcelHelper.SaveMemoryTestData(UserDetailTestRecord.UserInfo, UserDetailTestRecord.Group3TestInfo);
+                }
             }
 
             if (Test1Button.IsEnabled == false && Test2Button.IsEnabled == false && Test3Button.IsEnabled == false)
@@ -111,18 +136,19 @@ namespace PictureMemoryTraining.Views
         {
             if (Test1Button.IsEnabled)
             {
-                _userDetailTestRecord.Group1TestInfo = new GroupTestInfo();
+                UserDetailTestRecord.Group1TestInfo = new GroupTestInfo();
             }
             if (Test2Button.IsEnabled)
             {
-                _userDetailTestRecord.Group2TestInfo = new GroupTestInfo();
+                UserDetailTestRecord.Group2TestInfo = new GroupTestInfo();
             }
             if (Test3Button.IsEnabled)
             {
-                _userDetailTestRecord.Group3TestInfo = new GroupTestInfo();
+                UserDetailTestRecord.Group3TestInfo = new GroupTestInfo();
             }
             TraingViewCotnentControl.Content = null;
             QuitButton.Visibility = Visibility.Collapsed;
         }
+
     }
 }

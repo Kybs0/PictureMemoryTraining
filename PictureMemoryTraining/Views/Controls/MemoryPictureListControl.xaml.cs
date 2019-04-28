@@ -130,31 +130,35 @@ namespace PictureMemoryTraining.Views
         }
 
         public event EventHandler<LocationMemoryPictureItem> PictureLocationComfirmed;
-        private void YesButton_OnClick(object sender, RoutedEventArgs e)
+        private async void YesButton_OnClick(object sender, RoutedEventArgs e)
         {
-            var memoryPictureItem = MemoryPictureItems.First(i => i.IsPictureVisibile);
-            memoryPictureItem.IsPictureVisibile = false;
-            memoryPictureItem.IsPictureCovered = true;
-            PictureLocationComfirmed?.Invoke(this, new LocationMemoryPictureItem()
-            {
-                PictureItem = memoryPictureItem,
-                Location = MemoryPictureItems.IndexOf(memoryPictureItem),
-                IsMatchedByUserComfirmed = true
-            });
-
+            await ComfirmLocation(sender, true);
         }
 
-        private void NoButton_OnClick(object sender, RoutedEventArgs e)
+        private async Task ComfirmLocation(object sender, bool comfirmed)
         {
-            var memoryPictureItem = MemoryPictureItems.First(i => i.IsPictureVisibile);
-            memoryPictureItem.IsPictureVisibile = false;
-            memoryPictureItem.IsPictureCovered = true;
-            PictureLocationComfirmed?.Invoke(this, new LocationMemoryPictureItem()
+            this.IsEnabled = false;
+            if (sender is Button button)
             {
-                PictureItem = memoryPictureItem,
-                Location = MemoryPictureItems.IndexOf(memoryPictureItem),
-                IsMatchedByUserComfirmed = false
-            });
+                button.IsEnabled = false;
+                await Task.Delay(TimeSpan.FromMilliseconds(400));
+                var memoryPictureItem = MemoryPictureItems.First(i => i.IsPictureVisibile);
+                memoryPictureItem.IsPictureVisibile = false;
+                memoryPictureItem.IsPictureCovered = true;
+                PictureLocationComfirmed?.Invoke(this, new LocationMemoryPictureItem()
+                {
+                    PictureItem = memoryPictureItem,
+                    Location = MemoryPictureItems.IndexOf(memoryPictureItem),
+                    IsMatchedByUserComfirmed = comfirmed
+                });
+                button.IsEnabled = true;
+            }
+            this.IsEnabled = true;
+        }
+
+        private async void NoButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            await ComfirmLocation(sender, false);
         }
 
         #endregion

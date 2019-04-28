@@ -53,8 +53,8 @@
                     Visibility="{Binding ElementName=TraingViewCotnentControl,Path=Content,Converter={StaticResource NullToVisibilityReverseConverter}}">
             <GroupBox Header="Familiarization (can skip)" FontSize="25">
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
-                    <Button x:Name="Familiar1Button" Content="Group 1" Click="FamiliarButton_OnClick"></Button>
-                    <Button x:Name="Familiar2Button" Content="Group 2" Click="FamiliarButton_OnClick"></Button>
+                    <Button x:Name="Familiar1Button" Content="Group 1" Click="Familiar1Button_OnClick"></Button>
+                    <Button x:Name="Familiar2Button" Content="Group 2" Click="Familiar2Button_OnClick"></Button>
                 </StackPanel>
             </GroupBox>
             <GroupBox Header="Formal Test" FontSize="25" Margin="0,40">
@@ -79,6 +79,9 @@
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="ContentImage" Property="Source" Value="{StaticResource Image.Quit.Normal}"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
                                 <Setter TargetName="ContentImage" Property="Source" Value="{StaticResource Image.Quit.Dark}"/>
                             </Trigger>
                         </ControlTemplate.Triggers>
