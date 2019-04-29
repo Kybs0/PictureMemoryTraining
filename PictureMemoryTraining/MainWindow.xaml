@@ -9,7 +9,7 @@
         mc:Ignorable="d"
         Title="记忆大师" Width="1368" Height="912" Icon="Resources/Images/Memory.ico" 
         WindowStyle="None" AllowsTransparency="True" WindowStartupLocation="CenterScreen" WindowState="Maximized"
-        x:Name="TheMainWindow">
+        x:Name="TheMainWindow" Loaded="MainWindow_OnLoaded">
     <Window.Resources>
         <SolidColorBrush x:Key="Color.Text.Normal">#666666</SolidColorBrush>
         <StreamGeometry x:Key="Window.Minimize">M0,6 V8 H10 V6 Z</StreamGeometry>
