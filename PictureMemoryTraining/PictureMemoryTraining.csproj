@@ -44,6 +44,12 @@
     <Reference Include="Costura, Version=4.0.0.0, Culture=neutral, PublicKeyToken=9919ef960d84173d, processorArchitecture=MSIL">
       <HintPath>..\packages\Costura.Fody.4.0.0\lib\net40\Costura.dll</HintPath>
     </Reference>
+    <Reference Include="PictureMemoryTraining.Business">
+      <HintPath>..\Dependencies\PictureMemoryTraining.Business.dll</HintPath>
+    </Reference>
+    <Reference Include="PictureMemoryTraining.Utils">
+      <HintPath>..\Dependencies\PictureMemoryTraining.Utils.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
@@ -408,16 +414,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\PictureMemoryTraining.Business\PictureMemoryTraining.Business.csproj">
-      <Project>{2204F783-2F84-4296-941C-05D36D5C5A2F}</Project>
-      <Name>PictureMemoryTraining.Business</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\PictureMemoryTraining.Utils\PictureMemoryTraining.Utils.csproj">
-      <Project>{7f7c3fff-a809-44c4-97fa-6d9d506d9cb6}</Project>
-      <Name>PictureMemoryTraining.Utils</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Images\Memory.ico" />

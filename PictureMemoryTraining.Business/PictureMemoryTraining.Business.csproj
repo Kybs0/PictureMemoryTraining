@@ -35,6 +35,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Dependencies\Aspose.Cells.dll\Aspose.Cells.dll</HintPath>
     </Reference>
+    <Reference Include="PictureMemoryTraining.Utils">
+      <HintPath>..\Dependencies\PictureMemoryTraining.Utils.dll</HintPath>
+    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
@@ -57,12 +60,6 @@
     <Compile Include="NotifyPropertyChanged.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\PictureMemoryTraining.Utils\PictureMemoryTraining.Utils.csproj">
-      <Project>{7f7c3fff-a809-44c4-97fa-6d9d506d9cb6}</Project>
-      <Name>PictureMemoryTraining.Utils</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
