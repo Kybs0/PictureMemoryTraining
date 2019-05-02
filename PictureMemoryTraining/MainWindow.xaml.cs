@@ -1,17 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
+﻿using System.Windows;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using PictureMemoryTraining.Utils;
 
 namespace PictureMemoryTraining
 {
@@ -22,12 +11,13 @@ namespace PictureMemoryTraining
     {
         public MainWindow()
         {
-            if ((DateTime.Now - new DateTime(2019, 4, 29, 0, 0, 0)).Days > 2)
-            {
-                MessageBox.Show("图片记忆项目，已到试用期！请联系开发处理！");
-                Environment.Exit(0);
-            }
+            //if ((DateTime.Now - new DateTime(2019, 4, 29, 0, 0, 0)).Days > 2)
+            //{
+            //    MessageBox.Show("图片记忆项目，已到试用期！请联系开发处理！");
+            //    Environment.Exit(0);
+            //}
             InitializeComponent();
+            Loaded += InitWindowActualHeight_OnLoaded;
         }
 
         #region 窗口
@@ -50,6 +40,36 @@ namespace PictureMemoryTraining
             }
         }
 
+        #endregion
+
+
+        #region 设置窗口对屏幕高度的自适应
+
+        private void InitWindowActualHeight_OnLoaded(object sender, RoutedEventArgs e)
+        {
+            Loaded -= InitWindowActualHeight_OnLoaded;
+            InitWindowActualSize();
+        }
+
+        private void InitWindowActualSize()
+        {
+            //获取窗体所在屏幕的高度
+            var screenSizeInfo = this.GetScreenSizeInfo();
+            //获取任务栏高度
+            //var taskbarHeight = SystemParameters.PrimaryScreenHeight - SystemParameters.WorkArea.Height;
+            if (screenSizeInfo.Width <= this.Width || screenSizeInfo.Height <= this.Height)
+            {
+                //全屏。解决直接设置全屏模式，margin显示的问题
+                this.Width = screenSizeInfo.Width;
+                this.Height = screenSizeInfo.Height;
+                this.Top = screenSizeInfo.Top;
+                this.Left = screenSizeInfo.Left;
+            }
+            else
+            {
+                HeaderGrid.MouseLeftButtonDown += HeaderGrid_OnMouseLeftButtonDown;
+            }
+        }
         #endregion
     }
 }

@@ -7,8 +7,9 @@
         xmlns:helper="clr-namespace:PictureMemoryTraining.Helper"
         xmlns:views="clr-namespace:PictureMemoryTraining.Views"
         mc:Ignorable="d"
-        Title="记忆大师" Width="1368" Height="912" Icon="Resources/Images/Memory.ico" 
-        WindowStyle="None" AllowsTransparency="True" WindowStartupLocation="CenterScreen" WindowState="Maximized"
+        Title="记忆大师" Icon="Resources/Images/Memory.ico"
+        WindowStyle="None" AllowsTransparency="True" WindowStartupLocation="CenterScreen" 
+        Width="1368" Height="912"
         x:Name="TheMainWindow">
     <Window.Resources>
         <SolidColorBrush x:Key="Color.Text.Normal">#666666</SolidColorBrush>
@@ -74,16 +75,18 @@
         </ControlTemplate>
 
     </Window.Resources>
-<Border BorderBrush="Gainsboro" BorderThickness="1">
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="60"/>
-            <RowDefinition/>
-        </Grid.RowDefinitions>
-        <!-- 关闭按钮 -->
-        <Button x:Name="CloseButton" Style="{StaticResource Style.Button.Close}" Click="CloseButton_OnClick" 
-                HorizontalAlignment="Right" VerticalAlignment="Top" ToolTip="关闭" />
-        <views:MainView Grid.Row="1"></views:MainView>
-    </Grid>
+    <Border BorderBrush="Gainsboro" BorderThickness="1" >
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="60"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid x:Name="HeaderGrid" Background="White">
+                <!-- 关闭按钮 -->
+                <Button x:Name="CloseButton" Style="{StaticResource Style.Button.Close}" Click="CloseButton_OnClick" 
+                        HorizontalAlignment="Right" VerticalAlignment="Top" ToolTip="关闭" />
+            </Grid>
+            <views:MainView Grid.Row="1"></views:MainView>
+        </Grid>
     </Border>
 </Window>

@@ -21,7 +21,6 @@ namespace PictureMemoryTraining.Business.Excel
 
     public class UserTestRecordInfo
     {
-        public DateTime StartLearningTime { get; set; }
         public List<LearningClickInfo> LearningClickInfos = new List<LearningClickInfo>();
         public DateTime StartTestingTime { get; set; }
         public List<TestingClickInfo> SequentialTestingClickInfos = new List<TestingClickInfo>();
@@ -46,15 +45,26 @@ namespace PictureMemoryTraining.Business.Excel
         //    new TestingClickInfo()
         //};
     }
-
     public class TestingClickInfo
     {
+        /// <summary>
+        /// 图片名称
+        /// </summary>
         public string PictureName { get; set; }
         /// <summary>
         /// 点击时图片所在的位置
         /// </summary>
         public int Location { get; set; }
-        public DateTime ClickTime { get; set; }
+        public DateTime ClickToVisibleTime { get; set; }
+        public DateTime ClickToCollapsedTime { get; set; }
+        /// <summary>
+        /// 用户确认-是否
+        /// </summary>
+        public bool IsMatchedByUserComfirmed { get; set; }
+
+        /// <summary>
+        /// 是否正确
+        /// </summary>
         public bool IsRight { get; set; }
     }
 
@@ -65,6 +75,13 @@ namespace PictureMemoryTraining.Business.Excel
         /// 点击时图片所在的位置
         /// </summary>
         public int Location { get; set; }
-        public DateTime ClickTime { get; set; }
+        /// <summary>
+        /// 显示时间
+        /// </summary>
+        public DateTime ClickToVisibleTime { get; set; }
+        /// <summary>
+        /// 隐藏时间
+        /// </summary>
+        public DateTime ClickToCollapsedTime { get; set; }
     }
 }

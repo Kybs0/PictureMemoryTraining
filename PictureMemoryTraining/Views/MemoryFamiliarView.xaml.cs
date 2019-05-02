@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -78,16 +79,43 @@ namespace PictureMemoryTraining.Views
         private void SetTestingTip()
         {
             OperationGrid.Visibility = Visibility.Visible;
-            OperationTipTextBlock.Text = "Testing";
-            OperationGrid.PreviewMouseDown -= StartTesting;
-            OperationGrid.PreviewMouseDown += StartTesting;
+            OperationTipTextBlock.Text = "突击测试";
             //置空当前图片列表控件
             MemoryPictureListContentControl.Content = null;
+
+            var timer = new Timer();
+            timer.Interval = TimeSpan.FromSeconds(2).TotalMilliseconds;
+            timer.Elapsed += Timer_Elapsed;
+            timer.Start();
+
+            OperationGrid.PreviewMouseDown -= OperationGridOnPreviewMouseDown;
+            OperationGrid.PreviewMouseDown += OperationGridOnPreviewMouseDown;
+
+            void Timer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
+            {
+                EnterTestingStatus();
+            }
+
+            void OperationGridOnPreviewMouseDown(object sender, MouseButtonEventArgs e)
+            {
+                EnterTestingStatus();
+            }
+            void EnterTestingStatus()
+            {
+                timer.Stop();
+                timer.Close();
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    OperationTipTextBlock.Text = string.Empty;
+                    OperationGrid.Visibility = Visibility.Collapsed;
+                    OperationGrid.PreviewMouseDown -= OperationGridOnPreviewMouseDown;
+                    StartOrderTesting();
+                });
+            }
         }
 
-        private void StartTesting(object sender, MouseButtonEventArgs e)
+        private void StartOrderTesting()
         {
-            CancedlTestingTip();
             ResetMemoryPictureListStatus();
             StartSequentialMemoryTest();
             CurrentStateTextBlock.Text = "顺序测试";
@@ -115,19 +143,30 @@ namespace PictureMemoryTraining.Views
             MemoryPictureListContentControl.Content = memoryPictureListControl;
         }
 
-        private void CancedlTestingTip()
-        {
-            OperationGrid.Visibility = Visibility.Collapsed;
-            OperationGrid.PreviewMouseDown -= StartTesting;
-        }
-
         private void MemoryPictureList_OnSequentialSelected(object sender, List<MemoryPictureItem> selectedItems)
         {
-            //TODO 记录顺序测试结果
+            ShowSequentialTestResult(selectedItems);
+
             ResetMemoryPictureListStatus();
             StartLocationMemoryTesting();
             CurrentStateTextBlock.Text = "位置测试";
             CurrentStateDetailTextBlock.Text = "判断该位置是否与学习阶段相同，是选勾，否选叉";
+        }
+
+        private void ShowSequentialTestResult(List<MemoryPictureItem> selectedItems)
+        {
+            var memoryPictureItems = _memoryPictureItems.ToList();
+            bool isSequentialAllRight = true;
+            for (int i = 0; i < memoryPictureItems.Count; i++)
+            {
+                if (memoryPictureItems[i] != selectedItems[i])
+                {
+                    isSequentialAllRight = false;
+                    break;
+                }
+            }
+            var resultTipText = isSequentialAllRight ? "正确" : "错误";
+            SetResultTip(resultTipText);
         }
 
         private void ResetMemoryPictureListStatus()
@@ -184,12 +223,12 @@ namespace PictureMemoryTraining.Views
         private void MemoryPictureList_OnPictureLocationComfirmed(object sender, LocationMemoryPictureItem item)
         {
             //TODO 记录
-
             _selectedLocationTestingPictureList.Add(item);
             if (sender is MemoryPictureListControl memoryPictureListControl &&
                 _selectedLocationTestingPictureList.Count >= memoryPictureListControl.TrainingStageSetting.ClickMaxLimit)
             {
                 TestingCompleted?.Invoke(this, EventArgs.Empty);
+
             }
             else
             {
@@ -209,6 +248,41 @@ namespace PictureMemoryTraining.Views
                 visibileRandomPictureItem.IsPictureVisibile = true;
             }
         }
+
+        #endregion
+
+        #region 公共
+
+        private Timer _lastTestResulTimer = null;
+        /// <summary>
+        /// 设置结果提示
+        /// </summary>
+        /// <param name="resultTipText"></param>
+        private void SetResultTip(string resultTipText)
+        {
+            if (_lastTestResulTimer != null)
+            {
+                _lastTestResulTimer.Stop();
+                _lastTestResulTimer.Close();
+            }
+
+            TestResultTextBlock.Text = resultTipText;
+
+            var timer = _lastTestResulTimer = new Timer();
+            timer.Interval = TimeSpan.FromSeconds(2).TotalMilliseconds;
+            timer.Elapsed += Timer_Elapsed;
+            timer.Start();
+            void Timer_Elapsed(object sender, ElapsedEventArgs e)
+            {
+                timer.Elapsed -= Timer_Elapsed;
+                _lastTestResulTimer.Stop();
+                _lastTestResulTimer.Close();
+                _lastTestResulTimer = null;
+                Application.Current.Dispatcher.Invoke(() => { TestResultTextBlock.Text = string.Empty; });
+            }
+        }
+
+
 
         #endregion
     }

@@ -124,7 +124,64 @@
                 </GeometryDrawing>
             </DrawingImage.Drawing>
         </DrawingImage>
+        <ControlTemplate x:Key="OkButton.Template.Image" TargetType="Button">
+            <Border x:Name="RootBorder"
+                    BorderThickness="5" BorderBrush="#AFABAB" Background="White"
+                    CornerRadius="20" Height="100" Width="100"
+                    ClipToBounds="True" RenderTransformOrigin="0.5,0.5">
+                <Image x:Name="ContentImage" Source="{StaticResource Image.Ok.LightGray}" Stretch="Uniform" Margin="10"></Image>
+            </Border>
+            <ControlTemplate.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter TargetName="ContentImage" Property="Source" Value="{StaticResource Image.Ok.Normal}"/>
+                </Trigger>
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter TargetName="ContentImage" Property="Source" Value="{StaticResource Image.Ok.Dark}"/>
+                </Trigger>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter TargetName="ContentImage" Property="Source" Value="{StaticResource Image.Ok.LightGray}"/>
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
 
+        <ControlTemplate x:Key="NoButton.Template.Image" TargetType="Button">
+            <Border x:Name="RootBorder"
+                    BorderThickness="5" BorderBrush="#AFABAB" Background="White"
+                    CornerRadius="20" Height="100" Width="100"
+                    ClipToBounds="True" RenderTransformOrigin="0.5,0.5">
+                <Image x:Name="ContentImage" Source="{StaticResource Image.No.LightGray}" Stretch="Uniform" Margin="16"></Image>
+            </Border>
+            <ControlTemplate.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter TargetName="ContentImage" Property="Source" Value="{StaticResource Image.No.Normal}"/>
+                </Trigger>
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter TargetName="ContentImage" Property="Source" Value="{StaticResource Image.No.Dark}"/>
+                </Trigger>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter TargetName="ContentImage" Property="Source" Value="{StaticResource Image.No.LightGray}"/>
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+        <ControlTemplate x:Key="ConfirmButton.Tempate.Image" TargetType="Button">
+            <Border x:Name="RootBorder"
+                    BorderThickness="5" BorderBrush="#AFABAB" Background="White"
+                    CornerRadius="20" Height="100" Width="100"
+                    ClipToBounds="True" RenderTransformOrigin="0.5,0.5">
+                <Image x:Name="ContentImage" Source="{StaticResource Image.Ok.Normal}" Stretch="Uniform" Margin="10"></Image>
+            </Border>
+            <ControlTemplate.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter TargetName="ContentImage" Property="Source" Value="{StaticResource Image.Ok.Normal}"/>
+                </Trigger>
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter TargetName="ContentImage" Property="Source" Value="{StaticResource Image.Ok.Dark}"/>
+                </Trigger>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter TargetName="RootBorder" Property="Opacity" Value="0.5"/>
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
     </UserControl.Resources>
     <Grid>
         <ListBox x:Name="PictureList" Style="{StaticResource Style.ListBox}" HorizontalAlignment="Center" VerticalAlignment="Center"
@@ -132,78 +189,17 @@
         </ListBox>
 
         <StackPanel VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0 0 80 0">
-            <Button x:Name="ComfirmButton"
-                    Foreground="{StaticResource Brush.Accent.Light}"
+            <Button x:Name="ComfirmButton" Style="{StaticResource Style.Button.Base}"
+                    Content="确认"
                     Visibility="Collapsed" IsEnabled="False" Click="ComfirmButton_OnClick">
-                <Button.Template>
-                    <ControlTemplate TargetType="Button">
-                        <Border x:Name="RootBorder"
-                                BorderThickness="5" BorderBrush="#AFABAB" Background="White"
-                                CornerRadius="20" Height="100" Width="100"
-                                ClipToBounds="True" RenderTransformOrigin="0.5,0.5">
-                            <Image x:Name="ContentImage" Source="{StaticResource Image.Ok.Normal}" Stretch="Uniform" Margin="10"></Image>
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="ContentImage" Property="Source" Value="{StaticResource Image.Ok.Normal}"/>
-                            </Trigger>
-                            <Trigger Property="IsPressed" Value="True">
-                                <Setter TargetName="ContentImage" Property="Source" Value="{StaticResource Image.Ok.Dark}"/>
-                            </Trigger>
-                            <Trigger Property="IsEnabled" Value="False">
-                                <Setter TargetName="RootBorder" Property="Opacity" Value="0.5"/>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Button.Template>
             </Button>
-            <Button x:Name="YesButton"
+            <Button x:Name="YesButton" Style="{StaticResource Style.Button.Base}"
+                    Content="是"
                     Visibility="Collapsed" Click="YesButton_OnClick">
-                <Button.Template>
-                    <ControlTemplate TargetType="Button">
-                        <Border x:Name="RootBorder"
-                                BorderThickness="5" BorderBrush="#AFABAB" Background="White"
-                                CornerRadius="20" Height="100" Width="100"
-                                ClipToBounds="True" RenderTransformOrigin="0.5,0.5">
-                            <Image x:Name="ContentImage" Source="{StaticResource Image.Ok.LightGray}" Stretch="Uniform" Margin="10"></Image>
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="ContentImage" Property="Source" Value="{StaticResource Image.Ok.Normal}"/>
-                            </Trigger>
-                            <Trigger Property="IsPressed" Value="True">
-                                <Setter TargetName="ContentImage" Property="Source" Value="{StaticResource Image.Ok.Dark}"/>
-                            </Trigger>
-                            <Trigger Property="IsEnabled" Value="False">
-                                <Setter TargetName="ContentImage" Property="Source" Value="{StaticResource Image.Ok.LightGray}"/>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Button.Template>
             </Button>
-            <Button x:Name="NoButton"
+            <Button x:Name="NoButton" Style="{StaticResource Style.Button.Base}"
+                    Content="否" Margin="0 50 0 0"
                     Visibility="Collapsed" Click="NoButton_OnClick">
-                <Button.Template>
-                    <ControlTemplate TargetType="Button">
-                        <Border x:Name="RootBorder"
-                                BorderThickness="5" BorderBrush="#AFABAB" Background="White"
-                                CornerRadius="20" Height="100" Width="100"
-                                ClipToBounds="True" RenderTransformOrigin="0.5,0.5">
-                            <Image x:Name="ContentImage" Source="{StaticResource Image.No.LightGray}" Stretch="Uniform" Margin="16"></Image>
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="ContentImage" Property="Source" Value="{StaticResource Image.No.Normal}"/>
-                            </Trigger>
-                            <Trigger Property="IsPressed" Value="True">
-                                <Setter TargetName="ContentImage" Property="Source" Value="{StaticResource Image.No.Dark}"/>
-                            </Trigger>
-                            <Trigger Property="IsEnabled" Value="False">
-                                <Setter TargetName="ContentImage" Property="Source" Value="{StaticResource Image.No.LightGray}"/>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Button.Template>
             </Button>
         </StackPanel>
     </Grid>

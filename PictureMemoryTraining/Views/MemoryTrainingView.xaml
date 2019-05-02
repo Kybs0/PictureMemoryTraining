@@ -51,17 +51,17 @@
     <Grid>
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0 0 -60 0"
                     Visibility="{Binding ElementName=TraingViewCotnentControl,Path=Content,Converter={StaticResource NullToVisibilityReverseConverter}}">
-            <GroupBox Header="Familiarization (can skip)" FontSize="25">
+            <GroupBox Header="练习阶段" FontSize="25">
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
-                    <Button x:Name="Familiar1Button" Content="Group 1" Click="Familiar1Button_OnClick"></Button>
-                    <Button x:Name="Familiar2Button" Content="Group 2" Click="Familiar2Button_OnClick"></Button>
+                    <Button x:Name="Familiar1Button" Content="第1组" Click="Familiar1Button_OnClick"></Button>
+                    <Button x:Name="Familiar2Button" Content="第2组" Click="Familiar2Button_OnClick"></Button>
                 </StackPanel>
             </GroupBox>
-            <GroupBox Header="Formal Test" FontSize="25" Margin="0,40">
+            <GroupBox Header="正式测试" FontSize="25" Margin="0,40">
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
-                    <Button x:Name="Test1Button" Content="Group 1" Click="Test1Button_OnClick"></Button>
-                    <Button x:Name="Test2Button" Content="Group 2" Click="Test2Button_OnClick"></Button>
-                    <Button x:Name="Test3Button" Content="Group 3" Click="Test3Button_OnClick"></Button>
+                    <Button x:Name="Test1Button" Content="第1组" Click="Test1Button_OnClick"></Button>
+                    <Button x:Name="Test2Button" Content="第2组" Click="Test2Button_OnClick"></Button>
+                    <Button x:Name="Test3Button" Content="第3组" Click="Test3Button_OnClick"></Button>
                 </StackPanel>
             </GroupBox>
         </StackPanel>

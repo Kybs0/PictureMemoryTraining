@@ -73,32 +73,29 @@ namespace PictureMemoryTraining.Business.Excel
         private static void SavePicturesUserTestInfoByStep(Cells cells, int startRow, ref int columnIndex,
             UserTestRecordInfo fourPicturesTestInfo)
         {
-            cells[startRow, columnIndex++].Value = fourPicturesTestInfo.StartLearningTime.ToString("yyyy-MM-dd HH:mm:ss");
+            //记录记忆数据
             for (int i = 0; i < fourPicturesTestInfo.LearningClickInfos.Count; i++)
             {
                 var learningClickInfo = fourPicturesTestInfo.LearningClickInfos[i];
                 cells[startRow, columnIndex++].Value = learningClickInfo.PictureName;
                 cells[startRow, columnIndex++].Value = learningClickInfo.Location + 1;
-                cells[startRow, columnIndex++].Value = learningClickInfo.ClickTime.ToString("yyyy-MM-dd HH:mm:ss");
+                cells[startRow, columnIndex++].Value = learningClickInfo.ClickToVisibleTime.ToString("yyyy-MM-dd HH:mm:ss.fff");
+                cells[startRow, columnIndex++].Value = learningClickInfo.ClickToCollapsedTime.ToString("yyyy-MM-dd HH:mm:ss.fff");
             }
-
-            //记录测试数据
-            cells[startRow, columnIndex++].Value = fourPicturesTestInfo.StartTestingTime.ToString("yyyy-MM-dd HH:mm:ss");
+            //记录顺序测试数据
             for (int i = 0; i < fourPicturesTestInfo.SequentialTestingClickInfos.Count; i++)
             {
                 var clickInfo = fourPicturesTestInfo.SequentialTestingClickInfos[i];
                 cells[startRow, columnIndex++].Value = clickInfo.PictureName;
-                //cells[startRow, columnIndex++].Value = string.Empty;位置信息无意义
-                cells[startRow, columnIndex++].Value = clickInfo.ClickTime.ToString("yyyy-MM-dd HH:mm:ss");
                 cells[startRow, columnIndex++].Value = clickInfo.IsRight;
             }
-
+            //记录位置测试数据
             for (int i = 0; i < fourPicturesTestInfo.LocationTestingClickInfos.Count; i++)
             {
                 var clickInfo = fourPicturesTestInfo.LocationTestingClickInfos[i];
                 cells[startRow, columnIndex++].Value = clickInfo.PictureName;
                 cells[startRow, columnIndex++].Value = clickInfo.Location + 1;
-                cells[startRow, columnIndex++].Value = clickInfo.ClickTime.ToString("yyyy-MM-dd HH:mm:ss");
+                cells[startRow, columnIndex++].Value = clickInfo.IsMatchedByUserComfirmed;
                 cells[startRow, columnIndex++].Value = clickInfo.IsRight;
             }
         }
@@ -106,10 +103,10 @@ namespace PictureMemoryTraining.Business.Excel
         private static bool GetExcelPath(out string excelPath)
         {
             var baseDirectory = AppDomain.CurrentDomain.SetupInformation.ApplicationBase;
-            excelPath = Path.Combine(baseDirectory, @"Output\ZL实验结果呈现.xlsx");
+            excelPath = Path.Combine(baseDirectory, @"Output\图片记忆.xlsx");
             if (!File.Exists(excelPath))
             {
-                MessageBox.Show("文件“ZL实验结果呈现.xlsx”未找到！");
+                MessageBox.Show("文件“图片记忆.xlsx”未找到！");
                 return false;
             }
 

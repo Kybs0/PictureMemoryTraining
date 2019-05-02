@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,6 +24,11 @@ namespace PictureMemoryTraining.Views.Models
                 OnPropertyChanged();
             }
         }
+        /// <summary>
+        /// 图片名称
+        /// </summary>
+        public string PictureName => Path.GetFileNameWithoutExtension(ImageUri);
+
 
         public BitmapImage Picture
         {

@@ -36,6 +36,23 @@ namespace PictureMemoryTraining.Helper
             return (Geometry)element.GetValue(GeometryProperty);
         }
 
+        #region CornerRadius
+
+        public static readonly DependencyProperty CornerRadiusProperty = DependencyProperty.RegisterAttached(
+            "CornerRadius", typeof(CornerRadius), typeof(ControlHelper), new PropertyMetadata(default(CornerRadius)));
+
+        public static void SetCornerRadius(DependencyObject element, CornerRadius value)
+        {
+            element.SetValue(CornerRadiusProperty, value);
+        }
+
+        public static CornerRadius GetCornerRadius(DependencyObject element)
+        {
+            return (CornerRadius) element.GetValue(CornerRadiusProperty);
+        }
+
+        #endregion
+
         #region 用于描述：控件内部背景色
 
         public static readonly DependencyProperty BackgroundNormalProperty = DependencyProperty.RegisterAttached(

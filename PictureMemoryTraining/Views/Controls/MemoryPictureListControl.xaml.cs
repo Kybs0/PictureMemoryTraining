@@ -193,7 +193,6 @@ namespace PictureMemoryTraining.Views
                     //记录顺序点击信息
                     _testRecordInfo.SequentialTestingClickInfos.Add(new TestingClickInfo()
                     {
-                        ClickTime = DateTime.Now,
                         PictureName = Path.GetFileNameWithoutExtension(memoryPictureItem.ImageUri),
                         Location = MemoryPictureItems.IndexOf(memoryPictureItem)
                     });
@@ -254,10 +253,15 @@ namespace PictureMemoryTraining.Views
             {
                 _testRecordInfo.LearningClickInfos.Add(new LearningClickInfo()
                 {
-                    ClickTime = DateTime.Now,
+                    ClickToVisibleTime = DateTime.Now,
                     PictureName = Path.GetFileNameWithoutExtension(memoryPictureItem.ImageUri),
                     Location = MemoryPictureItems.IndexOf(memoryPictureItem)
                 });
+            }
+            else
+            {
+                var learningClickInfo = _testRecordInfo.LearningClickInfos.First(i => i.PictureName == memoryPictureItem.PictureName);
+                learningClickInfo.ClickToCollapsedTime = DateTime.Now;
             }
             //如果由显示改为关闭，则说明已经记忆过此图片
             if (isPreviousPictureVisibile && !memoryPictureItem.IsPictureVisibile)

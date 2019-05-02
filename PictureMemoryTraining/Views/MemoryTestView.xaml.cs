@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -16,6 +17,7 @@ using PictureMemoryTraining.Business.Excel;
 using PictureMemoryTraining.Utils;
 using PictureMemoryTraining.Views.Models;
 using Path = System.IO.Path;
+using Timer = System.Timers.Timer;
 
 namespace PictureMemoryTraining.Views
 {
@@ -82,8 +84,6 @@ namespace PictureMemoryTraining.Views
                     memoryPictureItem.IsPictureVisibile = false;
                 }
             }
-            //记录时间
-            _currentTestRecordInfo.StartLearningTime = DateTime.Now;
         }
 
         private UserTestRecordInfo GetTestInfoByClickCount(int clickMaxLimit)
@@ -148,16 +148,43 @@ namespace PictureMemoryTraining.Views
         private void SetTestingTip()
         {
             OperationGrid.Visibility = Visibility.Visible;
-            OperationTipTextBlock.Text = "Testing";
-            OperationGrid.PreviewMouseDown -= StartTesting;
-            OperationGrid.PreviewMouseDown += StartTesting;
+            OperationTipTextBlock.Text = "突击测试";
             //置空当前图片列表控件
             MemoryPictureListContentControl.Content = null;
-        }
 
-        private void StartTesting(object sender, MouseButtonEventArgs e)
+            var timer = new Timer();
+            timer.Interval = TimeSpan.FromSeconds(2).TotalMilliseconds;
+            timer.Elapsed += Timer_Elapsed;
+            timer.Start();
+
+            OperationGrid.PreviewMouseDown -= OperationGridOnPreviewMouseDown;
+            OperationGrid.PreviewMouseDown += OperationGridOnPreviewMouseDown;
+
+            void Timer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
+            {
+                EnterTestingStatus();
+            }
+
+            void OperationGridOnPreviewMouseDown(object sender, MouseButtonEventArgs e)
+            {
+                EnterTestingStatus();
+            }
+            void EnterTestingStatus()
+            {
+                timer.Stop();
+                timer.Close();
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    OperationTipTextBlock.Text = string.Empty;
+                    OperationGrid.Visibility = Visibility.Collapsed;
+                    OperationGrid.PreviewMouseDown -= OperationGridOnPreviewMouseDown;
+                    StartTesting();
+                });
+            }
+
+        }
+        private void StartTesting()
         {
-            CancedlTestingTip();
             ResetMemoryPictureListStatus();
             StartSequentialMemoryTest();
             CurrentStateTextBlock.Text = "记忆还原-顺序";
@@ -187,11 +214,7 @@ namespace PictureMemoryTraining.Views
             _currentTestRecordInfo.StartTestingTime = DateTime.Now;
         }
 
-        private void CancedlTestingTip()
-        {
-            OperationGrid.Visibility = Visibility.Collapsed;
-            OperationGrid.PreviewMouseDown -= StartTesting;
-        }
+
 
         private void MemoryPictureList_OnSequentialSelected(object sender, List<MemoryPictureItem> selectedItems)
         {
@@ -273,8 +296,8 @@ namespace PictureMemoryTraining.Views
             _currentTestRecordInfo.LocationTestingClickInfos.Add(new TestingClickInfo()
             {
                 PictureName = Path.GetFileNameWithoutExtension(memorizedMemoryPictureItem.PictureItem.ImageUri),
-                ClickTime = DateTime.Now,
                 Location = checkedPictureItem.Location,
+                IsMatchedByUserComfirmed=checkedPictureItem.IsMatchedByUserComfirmed,
                 IsRight = isRightLocation ? checkedPictureItem.IsMatchedByUserComfirmed : !checkedPictureItem.IsMatchedByUserComfirmed
             });
 
@@ -288,11 +311,9 @@ namespace PictureMemoryTraining.Views
             }
             else
             {
-                var random = new Random();
                 MemoryPictureItem visibileRandomPictureItem = null;
                 while (visibileRandomPictureItem == null)
                 {
-                    //var visibileRandomIndex = random.Next(memorizedPictureList.Count);
                     var randomPictureItem = memorizedPictureList[_selectedLocationTestingPictureList.Count].PictureItem;
                     if (_selectedLocationTestingPictureList.All(i => i.PictureItem != randomPictureItem))
                     {
@@ -306,17 +327,53 @@ namespace PictureMemoryTraining.Views
 
         #endregion
 
-        #region MyRegion
+        #region 完成一轮测试
 
-        private async void CompleteOneRoundTest()
+        private void CompleteOneRoundTest()
         {
             if (_usedmemoryCountOrderList.Count < _memoryCountOrderList.Count)
             {
-                await StartLearning();
+                ConfirmToLearn();
             }
             else
             {
                 TestingCompleted?.Invoke(this, EventArgs.Empty);
+            }
+        }
+
+        private void ConfirmToLearn()
+        {
+            OperationGrid.Visibility = Visibility.Visible;
+            OperationTipTextBlock.Text = "请继续学习";
+
+            var timer = new Timer();
+            timer.Interval = TimeSpan.FromSeconds(2).TotalMilliseconds;
+            timer.Elapsed += Timer_Elapsed;
+            timer.Start();
+
+            OperationGrid.PreviewMouseDown -= OperationGridOnPreviewMouseDown;
+            OperationGrid.PreviewMouseDown += OperationGridOnPreviewMouseDown;
+
+            void Timer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
+            {
+                ClipIntoLeaning();
+            }
+
+            void OperationGridOnPreviewMouseDown(object sender, MouseButtonEventArgs e)
+            {
+                ClipIntoLeaning();
+            }
+            void ClipIntoLeaning()
+            {
+                timer.Stop();
+                timer.Close();
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    OperationTipTextBlock.Text = string.Empty;
+                    OperationGrid.Visibility = Visibility.Collapsed;
+                    OperationGrid.PreviewMouseDown -= OperationGridOnPreviewMouseDown;
+                    StartLearning();
+                });
             }
         }
 
