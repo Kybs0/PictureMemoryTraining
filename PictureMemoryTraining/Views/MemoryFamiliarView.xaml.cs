@@ -155,11 +155,11 @@ namespace PictureMemoryTraining.Views
 
         private void ShowSequentialTestResult(List<MemoryPictureItem> selectedItems)
         {
-            var memoryPictureItems = _memoryPictureItems.ToList();
+            var memoryPictureItems = _memorizedPictureList.ToList();
             bool isSequentialAllRight = true;
             for (int i = 0; i < memoryPictureItems.Count; i++)
             {
-                if (memoryPictureItems[i] != selectedItems[i])
+                if (memoryPictureItems[i].PictureItem != selectedItems[i])
                 {
                     isSequentialAllRight = false;
                     break;
@@ -224,11 +224,14 @@ namespace PictureMemoryTraining.Views
         {
             //TODO 记录
             _selectedLocationTestingPictureList.Add(item);
+            //提示结果
+            var resultTipText = _memorizedPictureList.Any(i => i.PictureItem == item.PictureItem && i.Location == item.Location) ? "正确" : "错误";
+            SetResultTip(resultTipText);
+
             if (sender is MemoryPictureListControl memoryPictureListControl &&
                 _selectedLocationTestingPictureList.Count >= memoryPictureListControl.TrainingStageSetting.ClickMaxLimit)
             {
                 TestingCompleted?.Invoke(this, EventArgs.Empty);
-
             }
             else
             {
@@ -253,36 +256,16 @@ namespace PictureMemoryTraining.Views
 
         #region 公共
 
-        private Timer _lastTestResulTimer = null;
+        public event EventHandler<string> ResultTipShowing;
+
         /// <summary>
         /// 设置结果提示
         /// </summary>
         /// <param name="resultTipText"></param>
         private void SetResultTip(string resultTipText)
         {
-            if (_lastTestResulTimer != null)
-            {
-                _lastTestResulTimer.Stop();
-                _lastTestResulTimer.Close();
-            }
-
-            TestResultTextBlock.Text = resultTipText;
-
-            var timer = _lastTestResulTimer = new Timer();
-            timer.Interval = TimeSpan.FromSeconds(2).TotalMilliseconds;
-            timer.Elapsed += Timer_Elapsed;
-            timer.Start();
-            void Timer_Elapsed(object sender, ElapsedEventArgs e)
-            {
-                timer.Elapsed -= Timer_Elapsed;
-                _lastTestResulTimer.Stop();
-                _lastTestResulTimer.Close();
-                _lastTestResulTimer = null;
-                Application.Current.Dispatcher.Invoke(() => { TestResultTextBlock.Text = string.Empty; });
-            }
+            ResultTipShowing?.Invoke(this,resultTipText);
         }
-
-
 
         #endregion
     }

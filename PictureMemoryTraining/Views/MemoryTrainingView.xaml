@@ -47,6 +47,22 @@
         </DrawingImage>
 
         <converters:NullToVisibilityConverter x:Key="NullToVisibilityReverseConverter" IsReverse="True"/>
+
+        <ControlTemplate x:Key="QuitButton.Template" TargetType="Button">
+            <Border x:Name="RootBorder" Height="80" Width="80"
+                    ClipToBounds="True" RenderTransformOrigin="0.5,0.5">
+                <Image x:Name="ContentImage" Source="{StaticResource Image.Quit.Gray}" 
+                       Stretch="Uniform" Width="60"></Image>
+            </Border>
+            <ControlTemplate.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter TargetName="ContentImage" Property="Source" Value="{StaticResource Image.Quit.Normal}"/>
+                </Trigger>
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter TargetName="ContentImage" Property="Source" Value="{StaticResource Image.Quit.Dark}"/>
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
     </UserControl.Resources>
     <Grid>
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0 0 -60 0"
@@ -69,25 +85,10 @@
             <ContentControl x:Name="TraingViewCotnentControl"/>
             <Button x:Name="QuitButton" Content="Quit" Foreground="{StaticResource Brush.Text.Warning.Normal}" 
                     HorizontalAlignment="Right" VerticalAlignment="Bottom" Visibility="Collapsed"
-                    Click="QuitButton_OnClick" BorderThickness="0">
-                <Button.Template>
-                    <ControlTemplate TargetType="Button">
-                        <Border x:Name="RootBorder" Height="80" Width="80"
-                                ClipToBounds="True" RenderTransformOrigin="0.5,0.5">
-                            <Image x:Name="ContentImage" Source="{StaticResource Image.Quit.Gray}" 
-                                   Stretch="Uniform" Width="60"></Image>
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="ContentImage" Property="Source" Value="{StaticResource Image.Quit.Normal}"/>
-                            </Trigger>
-                            <Trigger Property="IsPressed" Value="True">
-                                <Setter TargetName="ContentImage" Property="Source" Value="{StaticResource Image.Quit.Dark}"/>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Button.Template>
-            </Button>
+                    Click="QuitButton_OnClick" BorderThickness="0" Template="{StaticResource QuitButton.Template}"/>
+
+            <TextBlock x:Name="TestResultTextBlock" HorizontalAlignment="Center" Margin="0 -20 0 0"
+                       VerticalAlignment="Top" Foreground="{StaticResource Brush.Text.Warning.Normal}" FontSize="25"/>
         </Grid>
     </Grid>
 </UserControl>

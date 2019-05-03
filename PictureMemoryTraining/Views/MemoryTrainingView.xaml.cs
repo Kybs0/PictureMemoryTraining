@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -45,6 +46,7 @@ namespace PictureMemoryTraining.Views
             var memoryFamiliarView = new MemoryFamiliarView();
             memoryFamiliarView.Tag = sender;
             memoryFamiliarView.TestingCompleted += MemoryFamiliarView_TestingCompleted;
+            memoryFamiliarView.ResultTipShowing += MemoryFamiliarView_ResultTipShowing;
 
             TraingViewCotnentControl.Content = memoryFamiliarView;
             QuitButton.Visibility = Visibility.Visible;
@@ -52,11 +54,13 @@ namespace PictureMemoryTraining.Views
             var items = MemoryPictureItemsManager.GetLearning1MemoryPictures();
             memoryFamiliarView.InitMemoryPictures(items);
         }
+
         private void Familiar2Button_OnClick(object sender, RoutedEventArgs e)
         {
             var memoryFamiliarView = new MemoryFamiliarView();
             memoryFamiliarView.Tag = sender;
             memoryFamiliarView.TestingCompleted += MemoryFamiliarView_TestingCompleted;
+            memoryFamiliarView.ResultTipShowing += MemoryFamiliarView_ResultTipShowing;
 
             TraingViewCotnentControl.Content = memoryFamiliarView;
             QuitButton.Visibility = Visibility.Visible;
@@ -150,5 +154,41 @@ namespace PictureMemoryTraining.Views
             QuitButton.Visibility = Visibility.Collapsed;
         }
 
+        #region 公共
+
+        private void MemoryFamiliarView_ResultTipShowing(object sender, string e)
+        {
+            SetResultTip(e);
+        }
+        private Timer _lastTestResulTimer = null;
+        /// <summary>
+        /// 设置结果提示
+        /// </summary>
+        /// <param name="resultTipText"></param>
+        private void SetResultTip(string resultTipText)
+        {
+            if (_lastTestResulTimer != null)
+            {
+                _lastTestResulTimer.Stop();
+                _lastTestResulTimer.Close();
+            }
+
+            TestResultTextBlock.Text = resultTipText;
+
+            var timer = _lastTestResulTimer = new Timer();
+            timer.Interval = TimeSpan.FromSeconds(2).TotalMilliseconds;
+            timer.Elapsed += Timer_Elapsed;
+            timer.Start();
+            void Timer_Elapsed(object sender, ElapsedEventArgs e)
+            {
+                timer.Elapsed -= Timer_Elapsed;
+                _lastTestResulTimer.Stop();
+                _lastTestResulTimer.Close();
+                _lastTestResulTimer = null;
+                Application.Current.Dispatcher.Invoke(() => { TestResultTextBlock.Text = string.Empty; });
+            }
+        }
+
+        #endregion
     }
 }
