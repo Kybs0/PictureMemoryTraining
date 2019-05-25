@@ -31,9 +31,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Aspose.Cells, Version=5.3.1.0, Culture=neutral, PublicKeyToken=9ec0ff091d04b091, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Dependencies\Aspose.Cells.dll\Aspose.Cells.dll</HintPath>
+    <Reference Include="Aspose.Cells">
+      <HintPath>..\..\..\Gitlab\jirauserquestion_1\packages\Aspose.Cells.dll\Aspose.Cells.dll</HintPath>
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />

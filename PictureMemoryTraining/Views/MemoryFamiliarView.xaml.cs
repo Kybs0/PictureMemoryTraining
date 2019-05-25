@@ -145,12 +145,21 @@ namespace PictureMemoryTraining.Views
 
         private void MemoryPictureList_OnSequentialSelected(object sender, List<MemoryPictureItem> selectedItems)
         {
-            ShowSequentialTestResult(selectedItems);
+            try
+            {
+                ShowSequentialTestResult(selectedItems);
 
-            ResetMemoryPictureListStatus();
-            StartLocationMemoryTesting();
-            CurrentStateTextBlock.Text = "位置测试";
-            CurrentStateDetailTextBlock.Text = "判断该位置是否与学习阶段相同，是选勾，否选叉";
+                ResetMemoryPictureListStatus();
+                StartLocationMemoryTesting();
+                CurrentStateTextBlock.Text = "位置测试";
+                CurrentStateDetailTextBlock.Text = "判断该位置是否与学习阶段相同，是选勾，否选叉";
+            }
+            catch (Exception e)
+            {
+                LogHelper.LogInfo($"{e.Message}from{nameof(MemoryPictureList_OnSequentialSelected)}\r\n{e.StackTrace}");
+                MessageBox.Show(Window.GetWindow(this),
+                    $"{e.Message}from{nameof(MemoryPictureList_OnSequentialSelected)}\r\n{e.StackTrace}");
+            }
         }
 
         private void ShowSequentialTestResult(List<MemoryPictureItem> selectedItems)
@@ -222,33 +231,39 @@ namespace PictureMemoryTraining.Views
         public event EventHandler TestingCompleted;
         private void MemoryPictureList_OnPictureLocationComfirmed(object sender, LocationMemoryPictureItem item)
         {
-            //TODO 记录
-            _selectedLocationTestingPictureList.Add(item);
-            //提示结果
-            var resultTipText = _memorizedPictureList.Any(i => i.PictureItem == item.PictureItem && i.Location == item.Location) ? "正确" : "错误";
-            SetResultTip(resultTipText);
+            try
+            {
+                _selectedLocationTestingPictureList.Add(item);
+                //提示结果
+                var resultTipText = _memorizedPictureList.Any(i => i.PictureItem == item.PictureItem && i.Location == item.Location) ? "正确" : "错误";
+                SetResultTip(resultTipText);
 
-            if (sender is MemoryPictureListControl memoryPictureListControl &&
-                _selectedLocationTestingPictureList.Count >= memoryPictureListControl.TrainingStageSetting.ClickMaxLimit)
-            {
-                TestingCompleted?.Invoke(this, EventArgs.Empty);
-            }
-            else
-            {
-                var memorizedPictureList = _memorizedPictureList;
-                var random = new Random();
-                MemoryPictureItem visibileRandomPictureItem = null;
-                while (visibileRandomPictureItem == null)
+                if (sender is MemoryPictureListControl memoryPictureListControl &&
+                    _selectedLocationTestingPictureList.Count >= memoryPictureListControl.TrainingStageSetting.ClickMaxLimit)
                 {
-                    var visibileRandomIndex = random.Next(memorizedPictureList.Count);
-                    var randomPictureItem = memorizedPictureList[visibileRandomIndex].PictureItem;
-                    if (_selectedLocationTestingPictureList.All(i => i.PictureItem != randomPictureItem))
-                    {
-                        visibileRandomPictureItem = randomPictureItem;
-                    }
+                    TestingCompleted?.Invoke(this, EventArgs.Empty);
                 }
+                else
+                {
+                    var memorizedPictureList = _memorizedPictureList;
+                    var random = new Random();
+                    MemoryPictureItem visibileRandomPictureItem = null;
+                    while (visibileRandomPictureItem == null)
+                    {
+                        var visibileRandomIndex = random.Next(memorizedPictureList.Count);
+                        var randomPictureItem = memorizedPictureList[visibileRandomIndex].PictureItem;
+                        if (_selectedLocationTestingPictureList.All(i => i.PictureItem != randomPictureItem))
+                        {
+                            visibileRandomPictureItem = randomPictureItem;
+                        }
+                    }
 
-                visibileRandomPictureItem.IsPictureVisibile = true;
+                    visibileRandomPictureItem.IsPictureVisibile = true;
+                }
+            }
+            catch (Exception e)
+            {
+                LogHelper.LogInfo($"{e.Message}from{nameof(MemoryPictureList_OnPictureLocationComfirmed)}\r\n{e.StackTrace}");
             }
         }
 
@@ -264,7 +279,7 @@ namespace PictureMemoryTraining.Views
         /// <param name="resultTipText"></param>
         private void SetResultTip(string resultTipText)
         {
-            ResultTipShowing?.Invoke(this,resultTipText);
+            ResultTipShowing?.Invoke(this, resultTipText);
         }
 
         #endregion

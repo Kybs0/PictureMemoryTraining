@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
+using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -17,7 +17,6 @@ using PictureMemoryTraining.Business.Excel;
 using PictureMemoryTraining.Utils;
 using PictureMemoryTraining.Views.Models;
 using Path = System.IO.Path;
-using Timer = System.Timers.Timer;
 
 namespace PictureMemoryTraining.Views
 {
@@ -218,21 +217,28 @@ namespace PictureMemoryTraining.Views
 
         private void MemoryPictureList_OnSequentialSelected(object sender, List<MemoryPictureItem> selectedItems)
         {
-            //记录顺序测试结果
-            var memorizedPictureList = GetLastThreeMemorizedPictures();
-            for (int i = 0; i < 3; i++)
+            try
             {
-                var memorizedPicture = memorizedPictureList[i];
-                var sequentialTestingClickInfo = _currentTestRecordInfo.SequentialTestingClickInfos[i];
+                //记录顺序测试结果
+                var memorizedPictureList = GetLastThreeMemorizedPictures();
+                for (int i = 0; i < 3; i++)
+                {
+                    var memorizedPicture = memorizedPictureList[i];
+                    var sequentialTestingClickInfo = _currentTestRecordInfo.SequentialTestingClickInfos[i];
 
-                var memorizedPictureName = Path.GetFileNameWithoutExtension(memorizedPicture.PictureItem.ImageUri);
-                sequentialTestingClickInfo.IsRight = sequentialTestingClickInfo.PictureName == memorizedPictureName;
+                    var memorizedPictureName = Path.GetFileNameWithoutExtension(memorizedPicture.PictureItem.ImageUri);
+                    sequentialTestingClickInfo.IsRight = sequentialTestingClickInfo.PictureName == memorizedPictureName;
+                }
+
+                ResetMemoryPictureListStatus();
+                StartLocationMemoryTesting();
+                CurrentStateTextBlock.Text = "记忆还原-位置";
+                CurrentStateDetailTextBlock.Text = "判断该位置是否与学习阶段相同，是选勾，否选叉";
             }
-
-            ResetMemoryPictureListStatus();
-            StartLocationMemoryTesting();
-            CurrentStateTextBlock.Text = "记忆还原-位置";
-            CurrentStateDetailTextBlock.Text = "判断该位置是否与学习阶段相同，是选勾，否选叉";
+            catch (Exception e)
+            {
+                LogHelper.LogInfo($"{e.Message}from{nameof(MemoryPictureList_OnSequentialSelected)}\r\n{e.StackTrace}");
+            }
         }
 
         private void ResetMemoryPictureListStatus()
@@ -289,39 +295,48 @@ namespace PictureMemoryTraining.Views
         public event EventHandler TestingCompleted;
         private void MemoryPictureList_OnPictureLocationComfirmed(object sender, LocationMemoryPictureItem checkedPictureItem)
         {
-            //记录位置测试结果
-            var memorizedPictureList = GetLastThreeMemorizedPictures();
-            var memorizedMemoryPictureItem = memorizedPictureList.First(i => i.PictureItem == checkedPictureItem.PictureItem);
-            var isRightLocation = checkedPictureItem.Location == memorizedMemoryPictureItem.Location;
-            _currentTestRecordInfo.LocationTestingClickInfos.Add(new TestingClickInfo()
+            try
             {
-                PictureName = Path.GetFileNameWithoutExtension(memorizedMemoryPictureItem.PictureItem.ImageUri),
+                //记录位置测试结果
+                var memorizedPictureList = GetLastThreeMemorizedPictures();
+                var memorizedMemoryPictureItem = memorizedPictureList.First(i => i.PictureItem == checkedPictureItem.PictureItem);
+                var isRightLocation = checkedPictureItem.Location == memorizedMemoryPictureItem.Location;
+                _currentTestRecordInfo.LocationTestingClickInfos.Add(new TestingClickInfo()
+                {
+                    PictureName = Path.GetFileNameWithoutExtension(memorizedMemoryPictureItem.PictureItem.ImageUri),
                 Location = checkedPictureItem.Location,
                 IsMatchedByUserComfirmed=checkedPictureItem.IsMatchedByUserComfirmed,
                 IsRight = isRightLocation ? checkedPictureItem.IsMatchedByUserComfirmed : !checkedPictureItem.IsMatchedByUserComfirmed
-            });
+                });
 
-            _selectedLocationTestingPictureList.Add(checkedPictureItem);
-            if (sender is MemoryPictureListControl memoryPictureListControl &&
-                _selectedLocationTestingPictureList.Count >= memoryPictureListControl.TrainingStageSetting.ClickMaxLimit)
-            {
-                ////完成一轮测试
-                _selectedLocationTestingPictureList.Clear();
-                CompleteOneRoundTest();
-            }
-            else
-            {
-                MemoryPictureItem visibileRandomPictureItem = null;
-                while (visibileRandomPictureItem == null)
+                _selectedLocationTestingPictureList.Add(checkedPictureItem);
+                if (sender is MemoryPictureListControl memoryPictureListControl &&
+                    _selectedLocationTestingPictureList.Count >= memoryPictureListControl.TrainingStageSetting.ClickMaxLimit)
                 {
-                    var randomPictureItem = memorizedPictureList[_selectedLocationTestingPictureList.Count].PictureItem;
-                    if (_selectedLocationTestingPictureList.All(i => i.PictureItem != randomPictureItem))
-                    {
-                        visibileRandomPictureItem = randomPictureItem;
-                    }
+                    ////完成一轮测试
+                    _selectedLocationTestingPictureList.Clear();
+                    CompleteOneRoundTest();
                 }
+                else
+                {
+                    var random = new Random();
+                    MemoryPictureItem visibileRandomPictureItem = null;
+                    while (visibileRandomPictureItem == null)
+                    {
+                        //var visibileRandomIndex = random.Next(memorizedPictureList.Count);
+                        var randomPictureItem = memorizedPictureList[_selectedLocationTestingPictureList.Count].PictureItem;
+                        if (_selectedLocationTestingPictureList.All(i => i.PictureItem != randomPictureItem))
+                        {
+                            visibileRandomPictureItem = randomPictureItem;
+                        }
+                    }
 
-                visibileRandomPictureItem.IsPictureVisibile = true;
+                    visibileRandomPictureItem.IsPictureVisibile = true;
+                }
+            }
+            catch (Exception e)
+            {
+                LogHelper.LogInfo($"{e.Message}from{nameof(MemoryPictureList_OnPictureLocationComfirmed)}\r\n{e.StackTrace}");
             }
         }
 

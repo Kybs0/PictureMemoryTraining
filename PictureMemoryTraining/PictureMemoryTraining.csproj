@@ -426,7 +426,16 @@
   <ItemGroup>
     <Resource Include="Resources\Images\Memory.ico" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\PictureMemoryTraining.Business\PictureMemoryTraining.Business.csproj">
+      <Project>{2204f783-2f84-4296-941c-05d36d5c5a2f}</Project>
+      <Name>PictureMemoryTraining.Business</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PictureMemoryTraining.Utils\PictureMemoryTraining.Utils.csproj">
+      <Project>{7f7c3fff-a809-44c4-97fa-6d9d506d9cb6}</Project>
+      <Name>PictureMemoryTraining.Utils</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Fody.5.0.0\build\Fody.targets" Condition="Exists('..\packages\Fody.5.0.0\build\Fody.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

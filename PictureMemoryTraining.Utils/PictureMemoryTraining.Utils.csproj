@@ -48,7 +48,9 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
+    <Compile Include="ScreenSizeHelper.cs" />
+    <Compile Include="LogHelper.cs" />
+    <Compile Include="CommomPath.cs" />
     <Compile Include="RegexConst.cs" />
     <Compile Include="ListExtensions.cs" />
     <Compile Include="DriveUtil.cs" />
