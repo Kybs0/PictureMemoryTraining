@@ -101,6 +101,7 @@ namespace PictureMemoryTraining.Views
         {
             var memoryTestView = new MemoryTestView(items, groupTestInfo);
             memoryTestView.Tag = sender;
+            memoryTestView.TestingCompleted -= MemoryTestView_TestingCompleted;
             memoryTestView.TestingCompleted += MemoryTestView_TestingCompleted;
             TraingViewCotnentControl.Content = memoryTestView;
             QuitButton.Visibility = Visibility.Visible;
@@ -108,6 +109,7 @@ namespace PictureMemoryTraining.Views
         public event EventHandler TestingCompleted;
         private void MemoryTestView_TestingCompleted(object sender, EventArgs e)
         {
+            (sender as MemoryTestView).TestingCompleted -= MemoryTestView_TestingCompleted;
             if (sender is MemoryTestView memoryTestView && memoryTestView.Tag is Button button)
             {
                 TraingViewCotnentControl.Content = null;

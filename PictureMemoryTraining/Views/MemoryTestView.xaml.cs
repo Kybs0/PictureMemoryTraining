@@ -180,7 +180,6 @@ namespace PictureMemoryTraining.Views
                     StartTesting();
                 });
             }
-
         }
         private void StartTesting()
         {
@@ -212,8 +211,6 @@ namespace PictureMemoryTraining.Views
             //记录开始测试时间
             _currentTestRecordInfo.StartTestingTime = DateTime.Now;
         }
-
-
 
         private void MemoryPictureList_OnSequentialSelected(object sender, List<MemoryPictureItem> selectedItems)
         {

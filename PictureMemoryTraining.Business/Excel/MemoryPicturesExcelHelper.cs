@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using Aspose.Cells;
+using PictureMemoryTraining.Utils;
 
 namespace PictureMemoryTraining.Business.Excel
 {
@@ -29,7 +30,6 @@ namespace PictureMemoryTraining.Business.Excel
                 }
                 catch (Exception e)
                 {
-                    MessageBox.Show($"{e.Message}\r\n导出到Excel异常，请确认是Excel状态是否正常！");
                 }
             }
         }
@@ -49,7 +49,7 @@ namespace PictureMemoryTraining.Business.Excel
                 }
                 catch (Exception e)
                 {
-                    MessageBox.Show($"{e.Message}\r\n导出到Excel异常，请确认是Excel状态是否正常！");
+                    LogHelper.LogInfo($"{e.Message}\r\n导出到Excel异常，请确认是Excel状态是否正常！");
                 }
             }
         }

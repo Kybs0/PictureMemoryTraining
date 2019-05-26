@@ -98,6 +98,7 @@ namespace PictureMemoryTraining.Views
 
             void OperationGridOnPreviewMouseDown(object sender, MouseButtonEventArgs e)
             {
+                OperationGrid.PreviewMouseDown -= OperationGridOnPreviewMouseDown;
                 EnterTestingStatus();
             }
             void EnterTestingStatus()
@@ -108,7 +109,6 @@ namespace PictureMemoryTraining.Views
                 {
                     OperationTipTextBlock.Text = string.Empty;
                     OperationGrid.Visibility = Visibility.Collapsed;
-                    OperationGrid.PreviewMouseDown -= OperationGridOnPreviewMouseDown;
                     StartOrderTesting();
                 });
             }
