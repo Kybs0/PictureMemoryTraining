@@ -119,6 +119,7 @@ namespace PictureMemoryTraining.Views
                 if (button == Test1Button)
                 {
                     MemoryPicturesExcelHelper.SaveMemoryTestData(UserDetailTestRecord.UserInfo, UserDetailTestRecord.Group1TestInfo);
+
                 }
                 else if (button == Test2Button)
                 {

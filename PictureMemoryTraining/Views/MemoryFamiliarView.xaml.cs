@@ -48,7 +48,7 @@ namespace PictureMemoryTraining.Views
 
             var memoryPictureListControl = new MemoryPictureListControl(new TrainingStageSetting()
             {
-                ClickMaxLimit = 2,
+                ClickMaxLimit = 3,
                 TrainingStage = TrainingStage.Learning
             }, new UserTestRecordInfo());
             memoryPictureListControl.MemoryPictureItems = items;
@@ -135,7 +135,7 @@ namespace PictureMemoryTraining.Views
             }
             var memoryPictureListControl = new MemoryPictureListControl(new TrainingStageSetting()
             {
-                ClickMaxLimit = 2,
+                ClickMaxLimit = 3,
                 TrainingStage = TrainingStage.SequentialTesting
             }, new UserTestRecordInfo());
             memoryPictureListControl.MemoryPictureItems = pictureItems;
@@ -216,7 +216,7 @@ namespace PictureMemoryTraining.Views
             //添加控件内容
             var memoryPictureListControl = new MemoryPictureListControl(new TrainingStageSetting()
             {
-                ClickMaxLimit = 2,
+                ClickMaxLimit = 3,
                 TrainingStage = TrainingStage.LocationTesting
             }, new UserTestRecordInfo());
             memoryPictureListControl.MemoryPictureItems = pictureItems;
