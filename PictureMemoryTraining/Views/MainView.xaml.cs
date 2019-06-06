@@ -48,7 +48,6 @@ namespace PictureMemoryTraining.Views
             _userDetailTestRecord.UserInfo = userInfoMode;
             MemoryTrainingView.UserDetailTestRecord = _userDetailTestRecord;
             UserStartingGrid.Visibility = Visibility.Collapsed;
-            //MemoryPicturesExcelHelper.SaveMemoryTestData(_userDetailTestRecord);
         }
         private UserDetailTestRecordInfo _userDetailTestRecord = new UserDetailTestRecordInfo();
         private void MemoryTrainingView_OnTestingCompleted(object sender, EventArgs e)

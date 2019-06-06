@@ -12,27 +12,6 @@ namespace PictureMemoryTraining.Business.Excel
 {
     public class MemoryPicturesExcelHelper
     {
-        public static void SaveMemoryTestData(UserDetailTestRecordInfo recordInfo)
-        {
-            if (GetExcelPath(out var excelPath))
-            {
-                try
-                {
-                    Workbook workbook = new Workbook(excelPath);
-                    var workbookWorksheet = workbook.Worksheets[0];
-                    Cells cells = workbookWorksheet.Cells;
-                    var startRow = cells.MaxDataRow + 1;
-                    SaveOneGroupTestInfo(recordInfo.UserInfo, recordInfo.Group1TestInfo, cells, startRow++);
-                    SaveOneGroupTestInfo(recordInfo.UserInfo, recordInfo.Group2TestInfo, cells, startRow++);
-                    SaveOneGroupTestInfo(recordInfo.UserInfo, recordInfo.Group3TestInfo, cells, startRow++);
-                    workbookWorksheet.AutoFitColumns(); //自适应宽
-                    workbook.Save(excelPath, SaveFormat.Auto);
-                }
-                catch (Exception e)
-                {
-                }
-            }
-        }
         public static void SaveMemoryTestData(UserInfoMode userInfo, GroupTestInfo groupTestInfo)
         {
             if (GetExcelPath(out var excelPath))
